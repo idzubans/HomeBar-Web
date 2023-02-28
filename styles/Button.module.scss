@@ -1,0 +1,41 @@
+@import 'variables.module.scss';
+
+.primaryButton{
+  color: white;
+  background-color: $primary-color;
+  border-radius: $small-radius;
+  box-shadow: $effect-shadow;
+  height: 42px;
+  padding: 9px 40px;
+  border: 2px solid $primary-color;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.secondaryButton{
+  color: $primary-color;
+  background-color: transparent;
+  border-radius: $small-radius;
+  box-shadow: $effect-shadow;
+  height: 42px;
+  padding: 9px 40px;
+  border: 2px solid $primary-color;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    box-shadow: none;
+  }
+}
