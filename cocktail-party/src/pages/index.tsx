@@ -2,7 +2,6 @@ import { getCookie } from "cookies-next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import FindParty from "~/components/FindParty/FindParty";
-import { Button } from "~/components/shared/Button";
 import { Party } from "~/model";
 import { getPartyById } from "~/server/party";
 
@@ -36,11 +35,13 @@ export default function Landing({ party }: Props) {
           Browse drinks
         </h3>
       </div>
-      <div className="flex h-28 w-11/12 content-center items-center rounded-3xl bg-white bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 text-center shadow-xl">
-        <h3 className="flex w-full justify-center text-4xl font-extrabold text-white">
-          Bartender portal
-        </h3>
-      </div>
+      <Link className="w-11/12" href="admin">
+        <div className="flex h-28 content-center items-center rounded-3xl bg-white bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 text-center shadow-xl">
+          <h3 className="flex w-full justify-center text-4xl font-extrabold text-white">
+            Bartender portal
+          </h3>
+        </div>
+      </Link>
     </div>
   );
 }

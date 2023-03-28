@@ -1,24 +1,22 @@
 import { getCookie } from "cookies-next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DrinkCart from "~/components/DrinkCard";
 import DrinksFilter from "~/components/DrinksFilter";
 import JoinPartyForm from "~/components/JoinPartyForm";
-import { ReturnModel } from "~/components/JoinPartyForm/JoinPartyForm";
 import MenuBar from "~/components/MenuBar";
 import type {
   Category,
   Drink,
   Ingredient,
-  SearchDrinksParams,
   Party,
 } from "~/model";
 import { getCategories } from "~/server/drinks/getCategories";
 import { getDrinks } from "~/server/drinks/getDrinks";
 import { getIngredients } from "~/server/ingredients/getIngredients";
 import { getPartyById } from "~/server/party";
-import { ParsedUrlQuery, stringify } from "querystring";
+import { ParsedUrlQuery } from "querystring";
 import queryString from "query-string";
 import { useFilterCount } from "~/hooks/filter/useFilterCount";
 import useSWR from "swr";

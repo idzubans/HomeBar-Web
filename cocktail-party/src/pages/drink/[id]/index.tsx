@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
 import { Button } from "~/components/shared/Button";
-import { JiggerIcon } from "~/icons/JiggerIcon";
 import { Drink } from "~/model";
 import { getDrinkById } from "~/server/drinks/getById";
 import { getDrinks } from "~/server/drinks/getDrinks";

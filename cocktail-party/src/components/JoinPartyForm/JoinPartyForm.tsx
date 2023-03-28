@@ -28,6 +28,8 @@ function JoinPartyForm({ partyModel, partyJoined }: Props) {
       const requestBody = {
         guestName: model.name,
       };
+
+      //TODO: use axios
       const response = await fetch(`/api/parties/join/${partyModel.id}`, {
         method: "POST",
         body: JSON.stringify(requestBody),

@@ -1,6 +1,4 @@
 import type { GetServerSideProps } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import DrinkCart from "~/components/DrinkCard";
 import DrinksFilter from "~/components/DrinksFilter";
@@ -17,28 +15,18 @@ interface Props {
 }
 
 function BrowseDrinks({ drinks, ingredients, categories }: Props) {
-  const { data: session } = useSession()
-
   const [drinkList, setDrinkList] = useState<Drink[]>(drinks);
   const [filterDisplayed, setFilterDisplayed] = useState(false);
-  const router = useRouter();
 
-  const refetchData = (params: SearchDrinksParams) => {
+  const onFilterClose = () => {
     setFilterDisplayed(false);
   };
 
   return (
     <div className="h-screen w-screen bg-gradient-to-t from-indigo-100">
-              <div >
-          {session && session.user ? (
-            <button onClick={() => signOut()}>Sign out</button>
-          ) : (
-            <button onClick={() => signIn()}>Sign in</button>
-          )}
-        </div>
       {filterDisplayed ? (
         <DrinksFilter
-          onFilterUpdated={refetchData}
+          filterClose={onFilterClose}
           ingredients={ingredients}
           categories={categories}
         ></DrinksFilter>
