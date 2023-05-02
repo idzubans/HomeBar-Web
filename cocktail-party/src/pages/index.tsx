@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import FindParty from "~/components/FindParty/FindParty";
 import { Party } from "~/model";
-import { getPartyById } from "~/server/party";
+import { getPartyById } from "~/server/domain/party";
 
 interface Props {
   party?: Party;

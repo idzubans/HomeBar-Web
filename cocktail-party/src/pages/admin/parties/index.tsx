@@ -1,21 +1,9 @@
-import { useSession } from "next-auth/react";
-import { Party } from "~/model";
-import useSWR from "swr";
 import Link from "next/link";
 import { Button } from "~/components/shared/Button";
-
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  return await response.json();
-};
+import { api } from "~/utils/api";
 
 function Parties() {
-  const { data: session, status } = useSession();
-
-  const { data: parties, isLoading } = useSWR<Party[]>(
-    () => session && `/api/admin/parties?userId=${session?.user.id}`,
-    fetcher
-  );
+  const { data: parties, isLoading } = api.parties.getAll.useQuery();
 
   return isLoading ? (
     <div>Loading...</div>
@@ -24,11 +12,8 @@ function Parties() {
       <h1>Parties</h1>
       <div>
         {parties?.map((party) => (
-          <Link
-            key={party.id}
-            href={`parties/${party.id}`}
-          >
-            <div className="flex flex-col gap-2 my-4 p-4 shadow-lg rounded-lg border-2 border-purple-300">
+          <Link key={party.id} href={`parties/${party.id}`}>
+            <div className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg">
               <h2>{party.name}</h2>
               <p>{party.endDate.toString()}</p>
               <p>{party.id}</p>
@@ -36,10 +21,9 @@ function Parties() {
           </Link>
         ))}
       </div>
-      <Link href="parties/create" >
+      <Link href="parties/create">
         <Button isPrimary>Create a party</Button>
       </Link>
-
     </div>
   );
 }

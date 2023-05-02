@@ -5,6 +5,7 @@ import useSWRMutation from "swr/mutation";
 import { Ingredient } from "~/model";
 import axios from "axios";
 import { Button } from "~/components/shared/Button";
+import { api } from "~/utils/api";
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);
@@ -18,21 +19,22 @@ const updateStock = async (url: string, { arg }: { arg: Ingredient[] }) => {
 };
 
 function Ingredients() {
-  const { data: session, status } = useSession();
+  // const {
+  //   data: ingredients,
+  //   isLoading,
+  //   mutate,
+  // } = useSWR<Ingredient[]>(
+  //   () => session && `/api/admin/ingredients?userId=${session?.user.id}`,
+  //   fetcher
+  // );
 
-  const {
-    data: ingredients,
-    isLoading,
-    mutate,
-  } = useSWR<Ingredient[]>(
-    () => session && `/api/admin/ingredients?userId=${session?.user.id}`,
-    fetcher
-  );
+  // const { trigger, isMutating } = useSWRMutation(
+  //   `/api/admin/ingredients?userId=${session?.user.id}`,
+  //   updateStock /* options */
+  // );
 
-  const { trigger, isMutating } = useSWRMutation(
-    `/api/admin/ingredients?userId=${session?.user.id}`,
-    updateStock /* options */
-  );
+  const { data: ingredients, isLoading } = api.ingredients.getByUserId.useQuery();
+
 
   const [changedIngredients, setChangedIngredients] = useState<string[]>([]);
 
@@ -60,8 +62,9 @@ function Ingredients() {
       return;
     }
 
-    await trigger(changedIngredientsData);
-    mutate();
+    // await trigger(changedIngredientsData);
+    // mutate();
+    //TODO update
     setChangedIngredients([]);
   };
 

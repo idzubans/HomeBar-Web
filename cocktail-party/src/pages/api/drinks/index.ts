@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { SearchDrinksParams } from "~/model";
-import { getDrinks } from "~/server/drinks/getDrinks";
+import { getDrinks } from "~/server/domain/drink";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const query = req.query;

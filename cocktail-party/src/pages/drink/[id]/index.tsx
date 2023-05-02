@@ -1,8 +1,7 @@
 import { GetStaticProps } from "next";
 import { Button } from "~/components/shared/Button";
 import { Drink } from "~/model";
-import { getDrinkById } from "~/server/drinks/getById";
-import { getDrinks } from "~/server/drinks/getDrinks";
+import { getDrinkById, getDrinks } from "~/server/domain/drink";
 
 interface Props {
   drink: Drink;

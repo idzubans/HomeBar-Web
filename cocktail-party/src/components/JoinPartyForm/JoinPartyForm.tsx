@@ -1,17 +1,13 @@
 import { useFormik } from "formik";
 import { setCookie } from "cookies-next";
-import { Drink, Party } from "~/model";
+import { Party } from "~/model";
 import { Button } from "../shared/Button";
 import { Input } from "../shared/Input";
-
-export interface ReturnModel {
-  drinks: Drink[];
-  guestId: string;
-}
+import { api } from "~/utils/api";
 
 interface Props {
   partyModel: Party;
-  partyJoined(model: ReturnModel): void;
+  partyJoined(): void;
 }
 
 interface FormModel {
@@ -19,34 +15,27 @@ interface FormModel {
 }
 
 function JoinPartyForm({ partyModel, partyJoined }: Props) {
+  const { mutate } = api.parties.join.useMutation({
+    onSuccess: (data) => {
+      if (data) {
+        const cookieOptions = { expires: new Date(partyModel.endDate) };
+        setCookie("guestId", data, cookieOptions);
+        setCookie("partyId", partyModel.id, cookieOptions);
+        partyJoined();
+      } else {
+        formik.setStatus({ success: false });
+        formik.setSubmitting(false);
+      }
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       name: "",
     },
 
-    onSubmit: async (model: FormModel) => {
-      const requestBody = {
-        guestName: model.name,
-      };
-
-      //TODO: use axios
-      const response = await fetch(`/api/parties/join/${partyModel.id}`, {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      if (response.status === 200) {
-        const partyDetail = await response.json();
-        const cookieOptions = { expires: new Date(partyModel.endDate) };
-        setCookie("guestId", partyDetail.guestId, cookieOptions);
-        setCookie("partyId", partyModel.id, cookieOptions);
-        partyJoined({
-          drinks: partyDetail.drinks,
-          guestId: partyDetail.guestId,
-        });
-      }
+    onSubmit: (model: FormModel) => {
+      mutate({ guestName: model.name, partyId: partyModel.id});
     },
   });
 

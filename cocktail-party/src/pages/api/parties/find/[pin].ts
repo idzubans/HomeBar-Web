@@ -9,7 +9,7 @@ type ResponseData = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   const { pin } = req.query;
 
-  const dbQuery = {
+  const partyDetail = await prisma.party.findFirst({
     where: {
       AND: [
         {
@@ -24,8 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
       ],
     },
-  }
-  const partyDetail = await prisma.party.findFirst(dbQuery);
+  });
 
   partyDetail
     ? res.status(200).json({ partyDetail })

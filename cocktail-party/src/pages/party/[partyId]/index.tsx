@@ -12,14 +12,14 @@ import type {
   Ingredient,
   Party,
 } from "~/model";
-import { getCategories } from "~/server/drinks/getCategories";
-import { getDrinks } from "~/server/drinks/getDrinks";
-import { getIngredients } from "~/server/ingredients/getIngredients";
-import { getPartyById } from "~/server/party";
 import { ParsedUrlQuery } from "querystring";
 import queryString from "query-string";
 import { useFilterCount } from "~/hooks/filter/useFilterCount";
 import useSWR from "swr";
+import { getPartyById } from "~/server/domain/party";
+import { getCategories, getDrinks } from "~/server/domain/drink";
+import { getIngredients } from "~/server/domain/ingredient";
+import { prisma } from "~/server/db";
 
 interface Props {
   drinks: Drink[];
@@ -40,7 +40,12 @@ function Party({ drinks, ingredients, categories, party }: Props) {
   const filterCount = useFilterCount();
   const router = useRouter();
 
-  // const [queryParams, setQueryParams] = useState("");
+  const partyId = getCookie("partyId");
+  const guestId = getCookie("guestId");
+
+  const isGuest = guestId && partyId === router.query.partyId;
+  console.log("isGuest", isGuest)
+
   const { data } = useSWR(router.query, fetcher);
 
   const onFilterClosed = () => {
@@ -51,15 +56,9 @@ function Party({ drinks, ingredients, categories, party }: Props) {
     router.replace(router.asPath);
   };
 
-  // useEffect(() => {
-  //   const params: SearchDrinksParams = { ...router.query };
-    
-
-  // }, [router.query]);
-
   return (
     <>
-      {data ? (
+      {isGuest && data ? (
         <div className="h-screen w-screen bg-gradient-to-t from-indigo-100">
           {filterDisplayed ? (
             <DrinksFilter
@@ -96,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (party) {
     if (partyIdCookie && query.partyId === partyIdCookie.toString()) {
       const drinks = getDrinks({ partyId: party.id });
-      const ingredients = getIngredients();
+      const ingredients = getIngredients(prisma);
       const categories = getCategories();
 
       const result = await Promise.all([drinks, ingredients, categories]);

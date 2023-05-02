@@ -1,5 +1,6 @@
-import { FormikHelpers, useFormik } from "formik";
-import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import router from "next/router";
+import { api } from "~/utils/api";
 import { Button } from "../shared/Button";
 import { Input } from "../shared/Input";
 
@@ -8,29 +9,25 @@ interface FormModel {
 }
 
 function FindParty() {
-  const router = useRouter();
+  const { mutate } = api.parties.findParty.useMutation({
+    onSuccess: (data) => {
+      if (data) {
+        formik.setStatus({ success: true });
+        router.push(`/party/${data.id}`);
+      } else {
+        formik.setStatus({ success: false });
+        formik.setSubmitting(false);
+        formik.setErrors({ pin: "Party not found" });
+      }
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
       pin: "",
     },
-    onSubmit: async (
-      model: FormModel,
-      { setSubmitting, setStatus, setErrors }: FormikHelpers<FormModel>
-    ) => {
-      const response = await fetch(`api/parties/find/${model.pin}`);
-      if (response.status !== 200) {
-        setStatus({ success: false });
-        setSubmitting(false);
-        setErrors({ pin: "Party not found" });
-        return;
-      }
-
-      if (response.status === 200) {
-        const {partyDetail} = await response.json();
-        setStatus({ success: true });
-        router.push(`/party/${partyDetail.id}`)
-      }
+    onSubmit: async (model: FormModel) => {
+      mutate({ pin: model.pin });
     },
   });
 

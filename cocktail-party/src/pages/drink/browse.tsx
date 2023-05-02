@@ -3,10 +3,10 @@ import { useState } from "react";
 import DrinkCart from "~/components/DrinkCard";
 import DrinksFilter from "~/components/DrinksFilter";
 import MenuBar from "~/components/MenuBar";
-import type { Category, Drink, Ingredient, SearchDrinksParams } from "~/model";
-import { getCategories } from "~/server/drinks/getCategories";
-import { getDrinks } from "~/server/drinks/getDrinks";
-import { getIngredients } from "~/server/ingredients/getIngredients";
+import type { Category, Drink, Ingredient } from "~/model";
+import { prisma } from "~/server/db";
+import { getCategories, getDrinks } from "~/server/domain/drink";
+import { getIngredients } from "~/server/domain/ingredient";
 
 interface Props {
   drinks: Drink[];
@@ -45,7 +45,7 @@ function BrowseDrinks({ drinks, ingredients, categories }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const drinks = getDrinks({});
-  const ingredients = getIngredients();
+  const ingredients = getIngredients(prisma);
   const categories = getCategories();
 
   const result = await Promise.all([drinks, ingredients, categories]);
