@@ -3,7 +3,18 @@ import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 
 function Ingredients() {
-  const { data: ingredients, isLoading } = api.ingredients.getByUserId.useQuery();
+  const {
+    data: ingredients,
+    isLoading,
+    refetch,
+  } = api.ingredients.getByUserId.useQuery();
+  const { mutate } = api.ingredients.update.useMutation({
+    onSuccess() {
+      refetch();
+      setChangedIngredients([]);
+    },
+  });
+
   const [changedIngredients, setChangedIngredients] = useState<string[]>([]);
 
   const changedAvailability = (id: string) => {
@@ -30,17 +41,14 @@ function Ingredients() {
       return;
     }
 
-    // await trigger(changedIngredientsData);
-    // mutate();
-    //TODO update
-    setChangedIngredients([]);
+    mutate(changedIngredientsData);
   };
 
   if (isLoading) {
     return <div>LOADING ANIMATION</div>;
   }
   return (
-    <div className="p-8 flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-8">
       <h1>Update your bar stock</h1>
       {ingredients &&
         ingredients.map((ingredient) => (
@@ -59,7 +67,9 @@ function Ingredients() {
             {ingredient.name}
           </div>
         ))}
-      <Button isPrimary={false} onClick={saveIngredients}>Save</Button>
+      <Button isPrimary={false} onClick={saveIngredients}>
+        Save
+      </Button>
     </div>
   );
 }
