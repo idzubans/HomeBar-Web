@@ -44,8 +44,4 @@ export const partiesRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return createGuest(ctx.prisma, input.guestName, input.partyId);
     }),
-
-  // getSecretMessage: protectedProcedure.query(() => {
-  //   return "you can now see this secret message!";
-  // }),
 });

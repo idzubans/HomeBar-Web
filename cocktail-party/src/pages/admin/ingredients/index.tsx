@@ -1,41 +1,9 @@
-import { useSession } from "next-auth/react";
 import { useState } from "react";
-import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
-import { Ingredient } from "~/model";
-import axios from "axios";
 import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  return await response.json();
-};
-
-const updateStock = async (url: string, { arg }: { arg: Ingredient[] }) => {
-  const response = await axios.put(url, arg);
-  const ingredients = await response.data;
-  return ingredients;
-};
-
 function Ingredients() {
-  // const {
-  //   data: ingredients,
-  //   isLoading,
-  //   mutate,
-  // } = useSWR<Ingredient[]>(
-  //   () => session && `/api/admin/ingredients?userId=${session?.user.id}`,
-  //   fetcher
-  // );
-
-  // const { trigger, isMutating } = useSWRMutation(
-  //   `/api/admin/ingredients?userId=${session?.user.id}`,
-  //   updateStock /* options */
-  // );
-
   const { data: ingredients, isLoading } = api.ingredients.getByUserId.useQuery();
-
-
   const [changedIngredients, setChangedIngredients] = useState<string[]>([]);
 
   const changedAvailability = (id: string) => {
