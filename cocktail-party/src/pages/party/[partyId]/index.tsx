@@ -44,7 +44,6 @@ function Party({ drinks, ingredients, categories, party }: Props) {
   const guestId = getCookie("guestId");
 
   const isGuest = guestId && partyId === router.query.partyId;
-  console.log("isGuest", isGuest)
 
   const { data } = useSWR(router.query, fetcher);
 

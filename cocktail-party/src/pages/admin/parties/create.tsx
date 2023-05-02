@@ -28,7 +28,6 @@ function Parties() {
       model: FormModel,
       { setSubmitting, setStatus, setErrors }: FormikHelpers<FormModel>
     ) => {
-      console.log("submitting");
       const requestBody = {
         name: model.name,
         userId: session?.user.id,
