@@ -9,7 +9,7 @@ export interface Drink {
     {
       name: string,
       id: string,
-      amount: Number,
+      amount: number,
       unit: MeasurementUnit
     }[];
   categories: {

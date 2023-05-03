@@ -29,7 +29,7 @@ function Ingredients() {
     }
   };
 
-  const saveIngredients = async () => {
+  const saveIngredients = () => {
     if (changedIngredients.length === 0) {
       return;
     }

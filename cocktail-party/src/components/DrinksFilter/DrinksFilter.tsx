@@ -36,7 +36,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
       ? `${router.query.partyId}?${filter}`
       : `${router.query.partyId}`;
 
-    router.push(route, undefined, { shallow: true });
+    void router.push(route, undefined, { shallow: true });
     // router.push({ pathname: router.pathname, query: {id: router.query.id, filter} }, undefined, { shallow: true });
 
     filterClose();
@@ -46,7 +46,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
     categoryFilter.resetFilter();
     ingredientFilter.resetFilter();
 
-    router.push(
+    void router.push(
       {
         pathname: router.pathname,
         query: { partyId: router.query.partyId },
