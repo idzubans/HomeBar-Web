@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Party } from "~/model"
-import { prisma } from "../db"
 
-export async function getPartyById(partyId: string): Promise<Party | null> {
+export async function getPartyById(prisma: PrismaClient, partyId: string): Promise<Party | null> {
   return await prisma.party.findFirst({
     where: {
       id: partyId

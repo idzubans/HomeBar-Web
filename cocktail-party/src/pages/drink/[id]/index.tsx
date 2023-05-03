@@ -30,9 +30,9 @@ function DrinkDetail({ drink }: Props) {
             </ul>
             <ul>
               {drink.categories.map((category) => (
-                <div>
+                <div key={category.id}>
                   {/* <JiggerIcon /> */}
-                  <li key={category.name}>{category.name}</li>
+                  <li>{category.name}</li>
                 </div>
               ))}
             </ul>

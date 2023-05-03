@@ -26,7 +26,7 @@ function FindParty() {
     initialValues: {
       pin: "",
     },
-    onSubmit: async (model: FormModel) => {
+    onSubmit: (model: FormModel) => {
       mutate({ pin: model.pin });
     },
   });

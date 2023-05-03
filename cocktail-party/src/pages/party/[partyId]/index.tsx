@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const partyIdCookie = getCookie("partyId", { req, res });
   const queryId = query.partyId as string;
-  const party = await getPartyById(queryId);
+  const party = await getPartyById(prisma, queryId);
 
   if (party) {
     if (partyIdCookie && query.partyId === partyIdCookie.toString()) {

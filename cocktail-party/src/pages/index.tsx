@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import FindParty from "~/components/FindParty/FindParty";
 import { Party } from "~/model";
+import { prisma } from "~/server/db";
 import { getPartyById } from "~/server/domain/party";
 
 interface Props {
@@ -49,7 +50,7 @@ export default function Landing({ party }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const partyId = getCookie("partyId", { req, res });
   if (partyId) {
-    const party = await getPartyById(partyId.toString());
+    const party = await getPartyById(prisma, partyId.toString());
     if (party) {
       return {
         props: {
