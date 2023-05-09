@@ -31,13 +31,11 @@ export interface Ingredient {
   id: string;
   name: string;
   isAvailable: boolean;
-  imageUrl: string;
 }
 
 export interface Category {
   id: string;
   name: string;
-  imageUrl: string;
 }
 
 export interface Party {

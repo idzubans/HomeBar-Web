@@ -7,7 +7,6 @@ export async function getIngredientsByUser(prisma: PrismaClient, userId: string)
     return {
       id: ingredient.id,
       name: ingredient.name,
-      imageUrl: ingredient.imageUrl,
       isAvailable: ingredient.bartenders.some(user => user.id === userId)
     };
   });
@@ -20,7 +19,6 @@ export async function getIngredients(prisma: PrismaClient): Promise<Ingredient[]
     return {
       id: ingredient.id,
       name: ingredient.name,
-      imageUrl: ingredient.imageUrl,
       isAvailable: true
     }
   })
@@ -44,7 +42,6 @@ export async function updateIngredientsStock(prisma: PrismaClient, userId: strin
     return {
       id: ingredient.id,
       name: ingredient.name,
-      imageUrl: ingredient.imageUrl,
       isAvailable: ingredient.bartenders.some(user => user.id === userId)
     }
   });

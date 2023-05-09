@@ -3,10 +3,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+    provider          = "postgresql"
+    // url      = env("DATABASE_URL")
+    url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+    shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
 // Necessary for Next auth
@@ -62,19 +63,19 @@ model VerificationToken {
 }
 
 model Drink {
-    id          String       @id @default(uuid())
-    name        String       @unique
-    imageUrl    String
-    tutorialUrl String?
-    ingredients RecipePart[]
-    orders      Order[]
-    categories  Category[]
+    id           String       @id @default(uuid())
+    name         String       @unique
+    imageUrl     String
+    tutorialUrl  String?
+    instructions String
+    ingredients  RecipePart[]
+    orders       Order[]
+    categories   Category[]
 }
 
 model Ingredient {
     id         String       @id @default(uuid())
     name       String       @unique
-    imageUrl   String       @default("https://res.cloudinary.com/dljchk64j/image/upload/c_thumb,w_200,g_face/v1667150402/cocktails/categories/classic_qv9cgx.png")
     drinks     RecipePart[]
     bartenders User[]
 }
@@ -103,10 +104,9 @@ model Order {
 }
 
 model Category {
-    id       String  @id @default(uuid())
-    name     String  @unique
-    imageUrl String  @default("https://res.cloudinary.com/dljchk64j/image/upload/c_thumb,w_200,g_face/v1667150908/cocktails/ingredients/gin_iciv3k.png")
-    drinks   Drink[]
+    id     String  @id @default(uuid())
+    name   String  @unique
+    drinks Drink[]
 }
 
 model Party {
@@ -141,6 +141,7 @@ enum MeasurementUnit {
     PEEL
     WHOLE
     SPOON
+    PINCH
 }
 
 enum OrderStatus {

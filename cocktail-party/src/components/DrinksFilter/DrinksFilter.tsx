@@ -67,7 +67,6 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           {categories.map((category: Category) => (
             <FilterCard
               name={category.name}
-              imageUrl={category.imageUrl}
               isSelected={categoryFilter.selectedItems.includes(category.name)}
               key={category.name}
               onToggle={() => categoryFilter.toggleItem(category.name)}
@@ -84,7 +83,6 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           {ingredients.map((ingredient: Ingredient) => (
             <FilterCard
               name={ingredient.name}
-              imageUrl={ingredient.imageUrl}
               isSelected={ingredientFilter.selectedItems.includes(
                 ingredient.name
               )}

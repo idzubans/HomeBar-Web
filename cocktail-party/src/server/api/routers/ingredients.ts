@@ -18,7 +18,6 @@ export const ingredientsRouter = createTRPCRouter({
         id: z.string(),
         name: z.string(),
         isAvailable: z.boolean(),
-        imageUrl: z.string(),
       })
     ))
     .mutation(({ ctx, input }) => {

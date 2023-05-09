@@ -4,7 +4,6 @@ interface CardProps {
 
 interface Props {
   name: string;
-  imageUrl: string;
   isSelected: boolean;
   onToggle(): void;
 }
