@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SyncLoader } from "react-spinners";
 import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 
@@ -45,7 +46,11 @@ function Ingredients() {
   };
 
   if (isLoading) {
-    return <div>LOADING ANIMATION</div>;
+    return (
+      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex items-center justify-center">
+        <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
+      </div>
+    );
   }
   return (
     <div className="flex flex-col gap-4 p-8">

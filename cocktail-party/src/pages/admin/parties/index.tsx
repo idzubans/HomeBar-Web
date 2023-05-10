@@ -1,5 +1,6 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import { SyncLoader } from "react-spinners";
 import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 
@@ -14,8 +15,12 @@ function Parties() {
       </Button>
     );
   }
-  if (status === "loading") {
-    return <div>LOADING ANIMATION</div>;
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex items-center justify-center">
+        <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
+      </div>
+    );
   }
   if (status === "authenticated") {
     return (

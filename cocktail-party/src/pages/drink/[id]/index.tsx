@@ -9,7 +9,7 @@ interface Props {
 
 function DrinkDetail({ drink }: Props) {
   return (
-    <div className="flex h-screen justify-center bg-gradient-to-br from-indigo-100">
+    <div className="flex min-h-screen justify-center bg-gradient-to-br from-indigo-100">
       <div className="m-auto flex w-11/12 flex-col items-center rounded-3xl bg-white text-center shadow-lg">
         <div className="w-full rounded-3xl bg-white shadow-lg">
           <img

@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "~/components/shared/Button";
+import { SyncLoader } from "react-spinners";
 
 function Admin() {
   const { status } = useSession();
@@ -13,12 +14,20 @@ function Admin() {
     );
   }
   if (status === "loading") {
-    return <div>LOADING ANIMATION</div>;
+    return (
+      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex justify-center items-center">
+        <SyncLoader
+          color={"#4338ca"}
+          size={20}
+          aria-label="Loading Spinner"
+        />
+      </div>
+    );
   }
   if (status === "authenticated") {
     return (
       <div>
-        <div className="m-auto flex h-screen flex-col items-center justify-center gap-8 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-gray-300 pt-8">
+        <div className="m-auto flex min-h-screen flex-col items-center justify-center gap-8 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-gray-300 pt-8">
           <Button isPrimary onClick={() => signOut()}>
             Sign out
           </Button>

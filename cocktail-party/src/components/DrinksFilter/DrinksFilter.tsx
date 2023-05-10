@@ -92,7 +92,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           ))}
         </div>
       </div>
-      <div className="sticky bottom-0 flex justify-center gap-8 rounded-2xl px-0 pt-2 pb-4 backdrop-blur-sm">
+      <div className="min-w-full sticky bottom-0 flex justify-center gap-8 rounded-2xl px-0 pt-2 pb-4 backdrop-blur-sm">
         <Button isPrimary onClick={saveFilter}>
           Apply
         </Button>

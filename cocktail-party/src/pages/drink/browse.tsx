@@ -23,7 +23,7 @@ function BrowseDrinks({ drinks, ingredients, categories }: Props) {
   };
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-t from-indigo-100">
+    <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100">
       {filterDisplayed ? (
         <DrinksFilter
           filterClose={onFilterClose}

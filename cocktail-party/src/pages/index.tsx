@@ -12,7 +12,7 @@ interface Props {
 
 export default function Landing({ party }: Props) {
   return (
-    <div className="m-auto flex h-screen flex-col items-center justify-center gap-8 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-gray-300 pt-8">
+    <div className="m-auto flex min-h-screen flex-col items-center justify-center gap-8 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-gray-300 pt-8">
       {party ? (
         <Link className="w-11/12" href={`/party/${party.id}`}>
           <div className="flex w-full items-center justify-center rounded-3xl bg-white p-6 text-center drop-shadow-md">
