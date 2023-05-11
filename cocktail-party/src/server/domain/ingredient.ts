@@ -1,19 +1,38 @@
 import { PrismaClient } from "@prisma/client";
 import { Ingredient } from "~/model";
 
-export async function getIngredientsByUser(prisma: PrismaClient, userId: string): Promise<Ingredient[]> {
+export async function getIngredientsByUser(prisma: PrismaClient, bartenderId: string): Promise<Ingredient[]> {
   const result = await prisma.ingredient.findMany({ include: { bartenders: { select: { id: true } } } });
   const ingredients = result.map(ingredient => {
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: ingredient.bartenders.some(user => user.id === userId)
+      isAvailable: ingredient.bartenders.some(user => user.id === bartenderId)
     };
   });
   return ingredients;
 }
 
-export async function getIngredients(prisma: PrismaClient): Promise<Ingredient[]> {
+export async function getAvailableIngredients(prisma: PrismaClient, bartenderId: string): Promise<Ingredient[]> {
+  const response = await prisma.ingredient.findMany({
+    where: {
+      bartenders: {
+        some: {
+          id: bartenderId
+        }
+      }
+    }
+  });
+  return response.map(ingredient => {
+    return {
+      id: ingredient.id,
+      name: ingredient.name,
+      isAvailable: true
+    }
+  })
+}
+
+export async function getAllIngredients(prisma: PrismaClient): Promise<Ingredient[]> {
   const response = await prisma.ingredient.findMany();
   return response.map(ingredient => {
     return {

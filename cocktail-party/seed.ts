@@ -33,17 +33,17 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'White rum',
+        name: 'white rum',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime Juice',
+        name: 'lime juice',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Simple syrup',
+        name: 'simple syrup',
         amount: 0.75,
         unit: 'OZ'
       }
@@ -61,27 +61,27 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Bourbon or Rye Whiskey',
+        name: 'bourbon',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Sugar Cube',
+        name: 'sugar cube',
         amount: 1,
         unit: 'WHOLE'
       },
       {
-        name: 'Angostura Bitters',
+        name: 'angostura bitters',
         amount: 2,
         unit: 'DASH'
       },
       {
-        name: 'Orange Peel',
+        name: 'orange',
         amount: 1,
         unit: 'PEEL'
       },
       {
-        name: 'Cocktail Cherry',
+        name: 'cocktail cherry',
         amount: 1,
         unit: 'WHOLE'
       }
@@ -101,17 +101,17 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Tequila',
+        name: 'tequila',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime Juice',
+        name: 'lime juice',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Orange Liqueur',
+        name: 'orange liqueur',
         amount: 0.75,
         unit: 'OZ'
       },
@@ -129,22 +129,22 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Vodka',
+        name: 'vodka',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime Juice',
+        name: 'lime juice',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Ginger Beer',
+        name: 'ginger beer',
         amount: 4,
         unit: 'OZ'
       },
       {
-        name: 'Lime Wheel',
+        name: 'lime wheel',
         amount: 1,
         unit: 'SLICE'
       }
@@ -162,22 +162,22 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Gin',
+        name: 'gin',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Sweet Vermouth',
+        name: 'sweet vermouth',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Campari',
+        name: 'campari',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Orange Peel',
+        name: 'orange',
         amount: 1,
         unit: 'PEEL'
       }
@@ -196,12 +196,12 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Gin or vodka',
+        name: 'gin',
         amount: 2.5,
         unit: 'OZ'
       },
       {
-        name: 'Dry vermouth',
+        name: 'dry vermouth',
         amount: 0.5,
         unit: 'OZ'
       }
@@ -219,27 +219,27 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'White rum',
+        name: 'white rum',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime',
+        name: 'lime',
         amount: 4,
         unit: 'SLICE'
       },
       {
-        name: 'Mint Leaves',
+        name: 'mint leaves',
         amount: 10,
         unit: 'WHOLE'
       },
       {
-        name: 'Simple syrup',
+        name: 'simple syrup',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Soda water',
+        name: 'soda water',
         amount: 4,
         unit: 'OZ'
       }
@@ -257,22 +257,22 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Rye whiskey',
+        name: 'rye whiskey',
         amount: 2.5,
         unit: 'OZ'
       },
       {
-        name: 'Sweet vermouth',
+        name: 'sweet vermouth',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Angostura bitters',
+        name: 'angostura bitters',
         amount: 2,
         unit: 'DASH'
       },
       {
-        name: 'Cherry',
+        name: 'cocktail cherry',
         amount: 1,
         unit: 'WHOLE'
       }
@@ -289,32 +289,32 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Dark rum',
+        name: 'dark rum',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Pineapple juice',
+        name: 'pineapple juice',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Orange juice',
+        name: 'orange juice',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Lime juice',
+        name: 'lime juice',
         amount: 0.5,
         unit: 'OZ'
       },
       {
-        name: 'Simple syrup',
+        name: 'simple syrup',
         amount: 0.5,
         unit: 'OZ'
       },
       {
-        name: 'Pineapple wedge',
+        name: 'pineapple wedge',
         amount: 1,
         unit: 'SLICE'
       }
@@ -332,32 +332,32 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Aged rum',
+        name: 'aged rum',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime Juice',
+        name: 'lime juice',
         amount: 0.75,
         unit: 'OZ'
       },
       {
-        name: 'Orange curacao',
+        name: 'orange curacao',
         amount: 0.5,
         unit: 'OZ'
       },
       {
-        name: 'Orgeat syrup',
+        name: 'orgeat syrup',
         amount: 0.25,
         unit: 'OZ'
       },
       {
-        name: 'Simple syrup',
+        name: 'simple syrup',
         amount: 0.25,
         unit: 'OZ'
       },
       {
-        name: 'Dark rum',
+        name: 'dark rum',
         amount: 0.25,
         unit: 'OZ'
       }
@@ -374,22 +374,22 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Vodka',
+        name: 'vodka',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Espresso',
+        name: 'espresso',
         amount: 1,
         unit: 'OZ'
       },
       {
-        name: 'Coffee liqueur',
+        name: 'coffee liqueur',
         amount: 0.5,
         unit: 'OZ'
       },
       {
-        name: 'Simple syrup',
+        name: 'simple syrup',
         amount: 0.5,
         unit: 'OZ'
       }
@@ -407,32 +407,32 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Gin',
+        name: 'gin',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Lime Juice',
+        name: 'lime juice',
         amount: 0.75,
         unit: 'OZ'
       },
       {
-        name: 'Simple Syrup',
+        name: 'simple syrup',
         amount: 0.75,
         unit: 'OZ'
       },
       {
-        name: 'Club Soda',
+        name: 'club soda',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Mint Leaves',
+        name: 'mint leaves',
         amount: 8,
         unit: 'WHOLE'
       },
       {
-        name: 'Cucumber',
+        name: 'cucumber',
         amount: 1,
         unit: 'SLICE'
       }
@@ -448,27 +448,27 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Tequila',
+        name: 'tequila',
         amount: 2,
         unit: 'OZ'
       },
       {
-        name: 'Grapefruit Juice',
+        name: 'grapefruit juice',
         amount: 3,
         unit: 'OZ'
       },
       {
-        name: 'Club Soda',
+        name: 'club soda',
         amount: 1,
         unit: 'WHOLE'
       },
       {
-        name: 'Salt',
+        name: 'salt',
         amount: 1,
         unit: 'PINCH'
       },
       {
-        name: 'Grapefruit Slice',
+        name: 'grapefruit slice',
         amount: 1,
         unit: 'SLICE'
       }
@@ -485,22 +485,22 @@ const drinks = [
     ],
     ingredients: [
       {
-        name: 'Bourbon',
+        name: 'bourbon',
         amount: 2.5,
         unit: 'OZ'
       },
       {
-        name: 'Mint Leaves',
+        name: 'mint leaves',
         amount: 10,
         unit: 'WHOLE'
       },
       {
-        name: 'Simple Syrup',
+        name: 'simple syrup',
         amount: 0.5,
         unit: 'OZ'
       },
       {
-        name: 'Mint Sprig',
+        name: 'mint sprig',
         amount: 1,
         unit: 'WHOLE'
       }
@@ -524,7 +524,7 @@ async function main() {
   // upsert drinks in series
   for (let index = 0; index < drinks.length; index++) {
     let drink = drinks[index];
-    console.log(drink)
+
     if (drink) {
       await prisma.drink.upsert({
         where: { name: drink.name },
@@ -559,43 +559,6 @@ async function main() {
       })
     }
   }
-
-  // drinks.map(async (drink) => {
-  //   await prisma.drink.upsert({
-  //     where: { name: drink.name },
-  //     update: {},
-  //     create: {
-  //       name: drink.name,
-  //       imageUrl: drink.imageUrl,
-  //       tutorialUrl: drink.tutorialUrl,
-  //       instructions: drink.instructions,
-  //       categories: {
-  //         connect: drink.categories.map(category => { return { name: category } })
-  //       },
-  //       ingredients: {
-  //         create: drink.ingredients.map(ingredient => {
-  //           return {
-  //             ingredient: {
-  //               connectOrCreate: {
-  //                 where: {
-  //                   name: ingredient.name
-  //                 },
-  //                 create: {
-  //                   name: ingredient.name
-  //                 }
-  //               }
-  //             },
-  //             amount: ingredient.amount,
-  //             unit: ingredient.unit
-  //           }
-  //         }),
-  //       },
-  //     },
-  //   })
-  // },
-  // );
-
-  //Promise.all(upsertDrinks);
 }
 main()
   .then(async () => {

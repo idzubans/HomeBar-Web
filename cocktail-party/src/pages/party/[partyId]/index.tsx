@@ -13,7 +13,7 @@ import { useFilterCount } from "~/hooks/filter/useFilterCount";
 import useSWR from "swr";
 import { getPartyById } from "~/server/domain/party";
 import { getCategories, getDrinks } from "~/server/domain/drink";
-import { getIngredients } from "~/server/domain/ingredient";
+import { getAvailableIngredients } from "~/server/domain/ingredient";
 import { prisma } from "~/server/db";
 import { SyncLoader } from "react-spinners";
 
@@ -122,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (party) {
     if (partyIdCookie && query.partyId === partyIdCookie.toString()) {
       const drinks = getDrinks({ partyId: party.id });
-      const ingredients = getIngredients(prisma);
+      const ingredients = getAvailableIngredients(prisma, party.userId);
       const categories = getCategories();
 
       const result = await Promise.all([drinks, ingredients, categories]);

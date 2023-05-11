@@ -6,7 +6,7 @@ import MenuBar from "~/components/MenuBar";
 import type { Category, Drink, Ingredient } from "~/model";
 import { prisma } from "~/server/db";
 import { getCategories, getDrinks } from "~/server/domain/drink";
-import { getIngredients } from "~/server/domain/ingredient";
+import { getAllIngredients } from "~/server/domain/ingredient";
 
 interface Props {
   drinks: Drink[];
@@ -45,7 +45,7 @@ function BrowseDrinks({ drinks, ingredients, categories }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const drinks = getDrinks({});
-  const ingredients = getIngredients(prisma);
+  const ingredients = getAllIngredients(prisma);
   const categories = getCategories();
 
   const result = await Promise.all([drinks, ingredients, categories]);
