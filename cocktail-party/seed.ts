@@ -339,7 +339,8 @@ const drinks = [
     instructions: 'Stir 2.5 oz rye whiskey, 1 oz sweet vermouth, and 2 dashes Angostura bitters with ice, strain into a chilled glass, and garnish with a cherry.',
     categories: [
       'Classic',
-      'Stirred'
+      'Stirred',
+      'Manhattan'
     ],
     ingredients: [
       {

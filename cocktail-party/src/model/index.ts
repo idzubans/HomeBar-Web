@@ -31,6 +31,7 @@ export interface Ingredient {
   id: string;
   name: string;
   isAvailable: boolean;
+  category: string | null;
 }
 
 export interface Category {

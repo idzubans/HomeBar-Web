@@ -7,7 +7,8 @@ export async function getIngredientsByUser(prisma: PrismaClient, bartenderId: st
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: ingredient.bartenders.some(user => user.id === bartenderId)
+      isAvailable: ingredient.bartenders.some(user => user.id === bartenderId),
+      category: ingredient.category
     };
   });
   return ingredients;
@@ -27,7 +28,8 @@ export async function getAvailableIngredients(prisma: PrismaClient, bartenderId:
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: true
+      isAvailable: true,
+      category: ingredient.category
     }
   })
 }
@@ -38,7 +40,8 @@ export async function getAllIngredients(prisma: PrismaClient): Promise<Ingredien
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: true
+      isAvailable: true,
+      category: ingredient.category
     }
   })
 }
@@ -61,7 +64,8 @@ export async function updateIngredientsStock(prisma: PrismaClient, userId: strin
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: ingredient.bartenders.some(user => user.id === userId)
+      isAvailable: ingredient.bartenders.some(user => user.id === userId),
+      category: ingredient.category,
     }
   });
 }
