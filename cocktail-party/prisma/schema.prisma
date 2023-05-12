@@ -76,6 +76,7 @@ model Drink {
 model Ingredient {
     id         String       @id @default(uuid())
     name       String       @unique
+    category   String?
     drinks     RecipePart[]
     bartenders User[]
 }
@@ -138,8 +139,11 @@ enum MeasurementUnit {
     ML
     DASH
     SLICE
+    WHEEL
     PEEL
-    WHOLE
+    TWIST
+    WEDGE
+    PIECE
     SPOON
     PINCH
 }
