@@ -46,7 +46,7 @@ export async function getAllIngredients(prisma: PrismaClient): Promise<Ingredien
   })
 }
 
-export async function updateIngredientsStock(prisma: PrismaClient, userId: string, ingredients: Ingredient[]): Promise<Ingredient[]> {
+export async function updateIngredientsStock(prisma: PrismaClient, userId: string, ingredients: Ingredient[]): Promise<boolean> {
   const promises = ingredients.map(async ingredient => {
     return await prisma.ingredient.update({
       where: { id: ingredient.id },
@@ -59,14 +59,7 @@ export async function updateIngredientsStock(prisma: PrismaClient, userId: strin
       include: { bartenders: { select: { id: true } } }
     })
   })
-  const response = await Promise.all(promises);
-  return response.map(ingredient => {
-    return {
-      id: ingredient.id,
-      name: ingredient.name,
-      isAvailable: ingredient.bartenders.some(user => user.id === userId),
-      category: ingredient.category,
-    }
-  });
+  const response = await Promise.allSettled(promises);
+  return response.some(promise => promise.status === 'rejected') ? false : true;
 }
 

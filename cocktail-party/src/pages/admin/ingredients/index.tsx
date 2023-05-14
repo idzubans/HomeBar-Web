@@ -4,15 +4,22 @@ import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 
 function Ingredients() {
-  const {
-    data: ingredients,
-    isLoading,
-    refetch,
-  } = api.ingredients.getByUserId.useQuery();
-  const { mutate } = api.ingredients.update.useMutation({
+  const context = api.useContext();
+  const { data: ingredients, isLoading } = api.ingredients.getByUserId.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+      onSuccess() {
+        if (changedIngredients.length > 0) {
+          setChangedIngredients([]);
+        }
+      },
+    }
+  );
+
+  const { mutate, isLoading: isMutating } = api.ingredients.update.useMutation({
     onSuccess() {
-      refetch();
-      setChangedIngredients([]);
+      context.ingredients.getByUserId.invalidate();
     },
   });
 
@@ -45,7 +52,7 @@ function Ingredients() {
     mutate(changedIngredientsData);
   };
 
-  if (isLoading) {
+  if (isLoading || isMutating) {
     return (
       <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
         <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
@@ -53,8 +60,6 @@ function Ingredients() {
     );
   } else if (ingredients) {
     const categories = [...new Set(ingredients.map((x) => x.category))];
-
-    console.log(categories);
 
     const ingredientsByCategory = categories.map((c) => {
       return {
