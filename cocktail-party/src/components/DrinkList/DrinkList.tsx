@@ -5,7 +5,7 @@ interface Props {
   drinks: Drink[];
 }
 
-function DrinkCard({ drinks }: Props) {
+function DrinkList({ drinks }: Props) {
   return (
     <div className="m-auto flex flex-col items-center gap-4">
       {drinks.map((drink: Drink) => (
@@ -33,4 +33,4 @@ function DrinkCard({ drinks }: Props) {
   );
 }
 
-export default DrinkCard;
+export default DrinkList;

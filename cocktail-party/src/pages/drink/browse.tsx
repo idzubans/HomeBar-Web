@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import { useState } from "react";
-import DrinkCart from "~/components/DrinkCard";
+import DrinkCart from "~/components/DrinkList";
 import DrinksFilter from "~/components/DrinksFilter";
 import MenuBar from "~/components/MenuBar";
 import type { Category, Drink, Ingredient } from "~/model";

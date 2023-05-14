@@ -2,7 +2,6 @@ import { getCookie } from "cookies-next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import DrinkCart from "~/components/DrinkCard";
 import DrinksFilter from "~/components/DrinksFilter";
 import JoinPartyForm from "~/components/JoinPartyForm";
 import MenuBar from "~/components/MenuBar";
@@ -16,6 +15,7 @@ import { getCategories, getDrinks } from "~/server/domain/drink";
 import { getAvailableIngredients } from "~/server/domain/ingredient";
 import { prisma } from "~/server/db";
 import { SyncLoader } from "react-spinners";
+import DrinkList from "~/components/DrinkList";
 
 interface Props {
   drinks: Drink[];
@@ -76,38 +76,12 @@ function Party({ drinks, ingredients, categories, party }: Props) {
               filterCount={filterCount}
               onFilterClicked={() => setFilterDisplayed(true)}
             />
-            <DrinkCart drinks={data} />
+            <DrinkList drinks={data} />
           </>
         )}
       </div>
     );
   }
-
-  // return (
-  //   <>
-  //     {isGuest && data ? (
-  //       <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100">
-  //         {filterDisplayed ? (
-  //           <DrinksFilter
-  //             filterClose={onFilterClosed}
-  //             ingredients={ingredients}
-  //             categories={categories}
-  //           ></DrinksFilter>
-  //         ) : (
-  //           <>
-  //             <MenuBar
-  //               filterCount={filterCount}
-  //               onFilterClicked={() => setFilterDisplayed(true)}
-  //             />
-  //             <DrinkCart drinks={data} />
-  //           </>
-  //         )}
-  //       </div>
-  //     ) : (
-  //       <JoinPartyForm partyJoined={onPartyJoined} partyModel={party} />
-  //     )}
-  //   </>
-  // );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
