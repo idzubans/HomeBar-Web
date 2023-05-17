@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Drink } from "~/model";
 
@@ -7,29 +8,54 @@ interface Props {
 
 function DrinkList({ drinks }: Props) {
   return (
-    <div className="m-auto flex flex-col items-center gap-4">
+    <motion.div className="m-auto flex flex-col items-center gap-4">
       {drinks.map((drink: Drink) => (
         <Link
-          className="w-11/12"
+          className="w-full"
           scroll={false}
           key={drink.id}
           href={`/drink/${drink.id}`}
         >
-          <div className="flex h-28 w-full content-start items-center rounded-3xl bg-white text-center shadow-xl">
-            <div className="flex h-full w-28 items-center justify-center rounded-3xl bg-white shadow-lg">
-              <img
-                className="h-full w-full rounded-3xl object-cover shadow"
+          <motion.div
+            layoutId={drink.id}
+            transition={{ duration: 0.8 }}
+            // initial={{ opacity: 0 }}
+            // animate={{ opacity: 1 }}
+            exit={{ scaleX: 1.2 }}
+            className="m-auto flex w-11/12 flex-col items-center rounded-3xl bg-white text-center shadow-lg"
+          >
+            <motion.div layoutId={`img-div-${drink.id}`} className="w-full rounded-3xl bg-white shadow-lg">
+              <motion.img
+                layoutId={`img-${drink.id}`}
                 src={drink.imageUrl}
                 alt={drink.name}
+                className="h-full w-full rounded-3xl object-cover"
               />
+            </motion.div>
+            <div className="w-full">
+              <motion.h1 layoutId={`h1-${drink.id}`}  className="inline-block bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 bg-clip-text py-4 text-5xl font-extrabold text-transparent">
+                {drink.name}
+              </motion.h1>
+              <div className="flex justify-center gap-8 py-4 text-start text-lg">
+                <ul>
+                  {drink.ingredients.map((i) => (
+                    <li key={i.name}>{i.name}</li>
+                  ))}
+                </ul>
+                <ul>
+                  {drink.categories.map((category) => (
+                    <div key={category.id}>
+                      {/* <JiggerIcon /> */}
+                      <li>{category.name}</li>
+                    </div>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <h3 className="flex w-2/3 justify-center bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 bg-clip-text text-2xl font-extrabold text-transparent">
-              {drink.name}
-            </h3>
-          </div>
+          </motion.div>
         </Link>
       ))}
-    </div>
+    </motion.div >
   );
 }
 

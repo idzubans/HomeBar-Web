@@ -1,47 +1,36 @@
 import { getCookie } from "cookies-next";
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import DrinksFilter from "~/components/DrinksFilter";
-import JoinPartyForm from "~/components/JoinPartyForm";
-import MenuBar from "~/components/MenuBar";
-import type { Category, Drink, Ingredient, Party } from "~/model";
-import { ParsedUrlQuery } from "querystring";
-import queryString from "query-string";
+import type { Category, Ingredient, Party } from "~/model";
 import { useFilterCount } from "~/hooks/filter/useFilterCount";
-import useSWR from "swr";
 import { getPartyById } from "~/server/domain/party";
-import { getCategories, getDrinks } from "~/server/domain/drink";
+import { getCategories } from "~/server/domain/drink";
 import { getAvailableIngredients } from "~/server/domain/ingredient";
 import { prisma } from "~/server/db";
 import { SyncLoader } from "react-spinners";
 import DrinkList from "~/components/DrinkList";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import { api } from "~/utils/api";
+import JoinPartyForm from "~/components/JoinPartyForm";
+import DrinksFilter from "~/components/DrinksFilter";
+import MenuBar from "~/components/MenuBar";
 
 interface Props {
-  drinks: Drink[];
   ingredients: Ingredient[];
   categories: Category[];
   party: Party;
+  isGuest: boolean;
 }
 
-const fetcher = async (queryParams: ParsedUrlQuery) => {
-  const parsedParams = queryString.stringify(queryParams);
-  const response = await fetch(`/api/drinks?${parsedParams}`);
-  const drinks = await response.json();
-  return drinks as Drink[];
-};
-
-function Party({ drinks, ingredients, categories, party }: Props) {
+function Party({ ingredients, categories, party, isGuest }: Props) {
   const [filterDisplayed, setFilterDisplayed] = useState(false);
   const filterCount = useFilterCount();
   const router = useRouter();
 
-  const partyId = getCookie("partyId");
-  const guestId = getCookie("guestId");
+  const { data: drinks, isLoading } = api.drinks.get.useQuery(router.query);
 
-  const isGuest = guestId && partyId === router.query.partyId;
-
-  const { data, isLoading } = useSWR(router.query, fetcher);
+  console.log(isLoading);
 
   const onFilterClosed = () => {
     setFilterDisplayed(false);
@@ -53,7 +42,7 @@ function Party({ drinks, ingredients, categories, party }: Props) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex items-center justify-center">
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
         <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
       </div>
     );
@@ -61,9 +50,9 @@ function Party({ drinks, ingredients, categories, party }: Props) {
 
   if (!isGuest) {
     return <JoinPartyForm partyJoined={onPartyJoined} partyModel={party} />;
-  } else if (data) {
+  } else if (drinks) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100">
+      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
         {filterDisplayed ? (
           <DrinksFilter
             filterClose={onFilterClosed}
@@ -76,7 +65,7 @@ function Party({ drinks, ingredients, categories, party }: Props) {
               filterCount={filterCount}
               onFilterClicked={() => setFilterDisplayed(true)}
             />
-            <DrinkList drinks={data} />
+            <DrinkList drinks={drinks} />
           </>
         )}
       </div>
@@ -87,39 +76,37 @@ function Party({ drinks, ingredients, categories, party }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
-  query,
+  params,
 }) => {
-  const partyIdCookie = getCookie("partyId", { req, res });
-  const queryId = query.partyId as string;
-  const party = await getPartyById(prisma, queryId);
+  const ssg = generateSSGHelper();
 
-  if (party) {
-    if (partyIdCookie && query.partyId === partyIdCookie.toString()) {
-      const drinks = getDrinks({ partyId: party.id });
-      const ingredients = getAvailableIngredients(prisma, party.userId);
-      const categories = getCategories();
-
-      const result = await Promise.all([drinks, ingredients, categories]);
-      return {
-        props: {
-          drinks: result[0],
-          ingredients: result[1],
-          categories: result[2],
-          party: JSON.parse(JSON.stringify(party)),
-          fallback: {
-            "/api/drinks": result[0],
-          },
-        },
-      };
-    }
-    return {
-      props: {
-        party: JSON.parse(JSON.stringify(party)),
-      },
-    };
+  if (typeof params?.partyId !== "string") {
+    throw new Error("no id");
   }
+  const party = await getPartyById(prisma, params?.partyId);
+
+  const partyId = getCookie("partyId", { req, res });
+  const guestId = getCookie("guestId", { req, res });
+  const isGuest = guestId != null && partyId === params?.partyId;
+
+  if (!party) {
+    throw new Error("no party");
+  }
+
+  const drinks = ssg.drinks.get.prefetch({ partyId: party.id });
+  const ingredients = getAvailableIngredients(prisma, party.userId);
+  const categories = getCategories();
+
+  const result = await Promise.all([drinks, ingredients, categories]);
+
   return {
-    props: {},
+    props: {
+      trpcState: ssg.dehydrate(),
+      ingredients: result[1],
+      categories: result[2],
+      party: JSON.parse(JSON.stringify(party)),
+      isGuest,
+    },
   };
 };
 

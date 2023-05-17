@@ -44,7 +44,7 @@ function BrowseDrinks({ drinks, ingredients, categories }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const drinks = getDrinks({});
+  const drinks = getDrinks(prisma, {});
   const ingredients = getAllIngredients(prisma);
   const categories = getCategories();
 
