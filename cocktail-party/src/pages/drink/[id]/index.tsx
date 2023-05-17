@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { GetStaticProps } from "next";
 import { Button } from "~/components/shared/Button";
 import { Drink } from "~/model";
@@ -11,30 +10,25 @@ interface Props {
 
 function DrinkDetail({ drink }: Props) {
   return (
-    <AnimatePresence mode="wait">
-      <motion.div  className="flex min-h-screen justify-center bg-gradient-to-br from-indigo-100">
-        <motion.div
-          layoutId={drink.id}
+      <div  className="flex min-h-screen justify-center bg-gradient-to-br from-indigo-100">
+        <div
           className="flex w-full flex-col items-center bg-white text-center shadow-lg"
         >
-          <motion.div
-            layoutId={`img-div-${drink.id}`}
+          <div
             className="w-full rounded-b-3xl bg-white shadow-lg"
           >
-            <motion.img
-              layoutId={`img-${drink.id}`}
+            <img
               src={drink.imageUrl}
               alt={drink.name}
               className="h-full w-full rounded-b-3xl object-cover"
             />
-          </motion.div>
+          </div>
           <div className="w-full px-4">
-            <motion.h1
-              layoutId={`h1-${drink.id}`}
+            <h1
               className="inline-block bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 bg-clip-text py-8 text-5xl font-extrabold text-transparent"
             >
               {drink.name}
-            </motion.h1>
+            </h1>
             <div className="flex justify-center gap-8 py-4 text-start text-lg">
               <ul className="list-disc">
                 {drink.ingredients.map((i) => (
@@ -63,9 +57,8 @@ function DrinkDetail({ drink }: Props) {
               </Button>
             </div>
           </div>
-        </motion.div>
-      </motion.div >
-    </AnimatePresence>
+        </div>
+      </div >
   );
 }
 

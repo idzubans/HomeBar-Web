@@ -25,8 +25,5 @@ const config = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    scrollRestoration: true,
-  },
 };
 export default config;

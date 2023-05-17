@@ -4,7 +4,6 @@ import { SessionProvider } from "next-auth/react";
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
-import { AnimatePresence } from "framer-motion";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -12,9 +11,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-
-        <Component {...pageProps} />
-
+      <Component {...pageProps} />
     </SessionProvider>
   );
 };
