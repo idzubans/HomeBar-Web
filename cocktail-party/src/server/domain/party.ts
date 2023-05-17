@@ -9,6 +9,20 @@ export async function getPartyById(prisma: PrismaClient, partyId: string): Promi
   })
 }
 
+export async function getAllActivePartiesId(prisma: PrismaClient): Promise<string[]> {
+  const parties = await prisma.party.findMany({
+    where: {
+      endDate: {
+        gte: new Date()
+      }
+    },
+    select: {
+      id: true
+    }
+  });
+  return parties.map(party => party.id);
+}
+
 export async function findPartyByPin(prisma: PrismaClient, pin: string): Promise<Party | null> {
   return await prisma.party.findFirst({
     where: {

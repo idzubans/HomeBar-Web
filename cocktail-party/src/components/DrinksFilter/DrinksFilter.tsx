@@ -7,6 +7,7 @@ import {
 import { Category, Ingredient, SearchDrinksParams } from "~/model";
 import { Button } from "../shared/Button";
 import FilterCard from "./FilterCard";
+import { getCookie } from "cookies-next";
 
 interface Props {
   ingredients: Ingredient[];
@@ -17,6 +18,8 @@ interface Props {
 function DrinksFilter({ ingredients, categories, filterClose }: Props) {
   //const [searchString, setSearchString] = useState<string>();
   const router = useRouter();
+  const partyId = getCookie("partyId");
+  console.log(partyId)
 
   const categoryFilter: IFilterElement = useFilterElement("categories");
   const ingredientFilter: IFilterElement = useFilterElement("ingredients");
@@ -72,6 +75,8 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
               onToggle={() => categoryFilter.toggleItem(category.name)}
             />
           ))}
+
+          {partyId && <span>asdsad</span>}
         </div>
 
         <hr className="mt-8 border-t-purple-800" />

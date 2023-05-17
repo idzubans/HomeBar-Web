@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { Category, Drink, SearchDrinksParams } from "~/model";
 import { prisma } from "~/server/db";
 
@@ -52,7 +53,7 @@ export async function getCategories(): Promise<Category[]> {
   return await prisma.category.findMany()
 }
 
-export async function getDrinks(params: SearchDrinksParams): Promise<Drink[]> {
+export async function getDrinks(prisma: PrismaClient, params: SearchDrinksParams): Promise<Drink[]> {
   const dbResponse = await prisma.drink.findMany(
     {
       where: {
