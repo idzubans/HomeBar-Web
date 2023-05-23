@@ -15,6 +15,7 @@ import { api } from "~/utils/api";
 import JoinPartyForm from "~/components/JoinPartyForm";
 import DrinksFilter from "~/components/DrinksFilter";
 import MenuBar from "~/components/MenuBar";
+import { motion } from "framer-motion";
 
 interface Props {
   ingredients: Ingredient[];
@@ -28,8 +29,6 @@ function Party({ ingredients, categories, party }: Props) {
   const router = useRouter();
 
   const { data: drinks, isLoading } = api.drinks.get.useQuery(router.query);
-
-  console.log(isLoading);
 
   const onFilterClosed = () => {
     setFilterDisplayed(false);
@@ -49,7 +48,7 @@ function Party({ ingredients, categories, party }: Props) {
 
 if (drinks) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
+      <motion.div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
         {filterDisplayed ? (
           <DrinksFilter
             filterClose={onFilterClosed}
@@ -57,15 +56,15 @@ if (drinks) {
             categories={categories}
           ></DrinksFilter>
         ) : (
-          <>
+          <motion.div>
             <MenuBar
               filterCount={filterCount}
               onFilterClicked={() => setFilterDisplayed(true)}
             />
             <DrinkList drinks={drinks} />
-          </>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     );
   }
 }

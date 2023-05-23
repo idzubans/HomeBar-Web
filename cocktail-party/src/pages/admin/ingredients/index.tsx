@@ -69,11 +69,15 @@ function Ingredients() {
     });
 
     return (
-      <div className="flex flex-col gap-4 p-8">
-        <h1>Update your ingredients inventory</h1>
+      <div className="flex flex-col p-8">
+        <h1 className="text-purple-950 text-center text-2xl font-semibold">
+          Update your ingredients inventory
+        </h1>
         {ingredientsByCategory.map((cat) => (
-          <div>
-            <span>{cat.title}</span>
+          <div className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg">
+            <h2 className="text-purple-950 pb-2 text-center text-xl font-semibold">
+              {cat.title}
+            </h2>
             {cat.elements.map((ingredient) => (
               <div className="flex gap-4" key={ingredient.id}>
                 <input
@@ -92,7 +96,7 @@ function Ingredients() {
             ))}
           </div>
         ))}
-        <Button isPrimary={false} onClick={saveIngredients}>
+        <Button isPrimary={true} onClick={saveIngredients}>
           Save
         </Button>
       </div>

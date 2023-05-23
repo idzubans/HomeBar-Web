@@ -17,7 +17,7 @@ function Parties() {
   }
   if (status === "loading" || isLoading) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex items-center justify-center">
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
         <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
       </div>
     );
@@ -25,14 +25,21 @@ function Parties() {
   if (status === "authenticated") {
     return (
       <div className="p-8">
-        <h1>Parties</h1>
+        <h1 className="text-purple-950 pb-2 text-center text-2xl font-semibold">
+          Your parties
+        </h1>
         <div>
           {parties?.map((party) => (
             <Link key={party.id} href={`parties/${party.id}`}>
               <div className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg">
-                <h2>{party.name}</h2>
-                <p>{party.endDate.toString()}</p>
-                <p>{party.id}</p>
+                <h2 className="text-purple-950 pb-2 text-center text-xl font-semibold">
+                  {party.name}
+                </h2>
+                <p>
+                  Active until: {party.endDate.toLocaleDateString()},{" "}
+                  {party.endDate.toLocaleTimeString()}
+                </p>
+                <p>Party ID: {party.id}</p>
               </div>
             </Link>
           ))}

@@ -8,6 +8,7 @@ import { Category, Ingredient, SearchDrinksParams } from "~/model";
 import { Button } from "../shared/Button";
 import FilterCard from "./FilterCard";
 import { getCookie } from "cookies-next";
+import { motion } from "framer-motion";
 
 interface Props {
   ingredients: Ingredient[];
@@ -19,7 +20,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
   //const [searchString, setSearchString] = useState<string>();
   const router = useRouter();
   const partyId = getCookie("partyId");
-  console.log(partyId)
+  console.log(partyId);
 
   const categoryFilter: IFilterElement = useFilterElement("categories");
   const ingredientFilter: IFilterElement = useFilterElement("ingredients");
@@ -61,23 +62,30 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
   };
 
   return (
-    <div className="m-auto flex flex-col items-center justify-center gap-8 p-4">
+    <motion.div
+      transition={{ duration: 0.7, type: "spring", damping: 15, stiffness: 150}}
+      initial={{ opacity: 0, y: 800 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 800 }}
+      className="m-auto flex flex-col items-center justify-center gap-8 p-4"
+    >
       <div>
         <h2 className="flex items-center justify-center py-2 font-semibold text-purple-800">
           Categories
         </h2>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category: Category) => (
+        <motion.div className="flex flex-wrap gap-2">
+          {categories.map((category: Category, index: number) => (
             <FilterCard
               name={category.name}
               isSelected={categoryFilter.selectedItems.includes(category.name)}
               key={category.name}
               onToggle={() => categoryFilter.toggleItem(category.name)}
+              index={index}
             />
           ))}
 
           {partyId && <span>asdsad</span>}
-        </div>
+        </motion.div>
 
         <hr className="mt-8 border-t-purple-800" />
 
@@ -85,7 +93,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           Ingredients
         </h2>
         <div className="flex flex-wrap gap-2">
-          {ingredients.map((ingredient: Ingredient) => (
+          {ingredients.map((ingredient: Ingredient, index: number) => (
             <FilterCard
               name={ingredient.name}
               isSelected={ingredientFilter.selectedItems.includes(
@@ -93,11 +101,12 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
               )}
               key={ingredient.name}
               onToggle={() => ingredientFilter.toggleItem(ingredient.name)}
+              index={index}
             />
           ))}
         </div>
       </div>
-      <div className="min-w-full sticky bottom-0 flex justify-center gap-8 rounded-2xl px-0 pt-2 pb-4 backdrop-blur-sm">
+      <div className="sticky bottom-0 flex min-w-full justify-center gap-8 rounded-2xl px-0 pt-2 pb-4 backdrop-blur-sm">
         <Button isPrimary onClick={saveFilter}>
           Apply
         </Button>
@@ -105,7 +114,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           Reset
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
