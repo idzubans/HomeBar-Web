@@ -1,4 +1,4 @@
-import type { GetServerSideProps, GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { Category, Ingredient, Party, SearchDrinksParams } from "~/model";
@@ -15,13 +15,11 @@ import JoinPartyForm from "~/components/JoinPartyForm";
 import DrinksFilter from "~/components/DrinksFilter";
 import MenuBar from "~/components/MenuBar";
 import { motion } from "framer-motion";
-import { getCookie } from "cookies-next";
 
 interface Props {
   ingredients: Ingredient[];
   categories: Category[];
   party: Party;
-  isGuest: boolean;
 }
 
 const prepareFilterObject = (param: string | string[]): string[] => {
@@ -31,7 +29,7 @@ const prepareFilterObject = (param: string | string[]): string[] => {
   return [param];
 };
 
-function Party({ ingredients, categories, party, isGuest }: Props) {
+function Party({ ingredients, categories, party }: Props) {
   const [filterDisplayed, setFilterDisplayed] = useState(false);
   const [filter, setFilter] = useState<SearchDrinksParams>({});
   const filterCount = useFilterCount();
@@ -69,9 +67,7 @@ function Party({ ingredients, categories, party, isGuest }: Props) {
     );
   }
 
-  if (!isGuest) {
-    return <JoinPartyForm partyJoined={onPartyJoined} partyModel={party} />;
-  } else if (drinks) {
+if (drinks) {
     return (
       <motion.div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
         {filterDisplayed ? (
@@ -94,74 +90,39 @@ function Party({ ingredients, categories, party, isGuest }: Props) {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-  params,
-}) => {
+export const getServer: GetStaticProps = async ({ params }) => {
   const ssg = generateSSGHelper();
+
   if (typeof params?.partyId !== "string") {
     throw new Error("no id");
   }
   const party = await getPartyById(prisma, params?.partyId);
 
-  const partyId = getCookie("partyId", { req, res });
-  const guestId = getCookie("guestId", { req, res });
-  const isGuest = guestId != null && partyId === params?.partyId;
+  // const partyId = getCookie("partyId", { req, res });
+  // const guestId = getCookie("guestId", { req, res });
+  // const isGuest = guestId != null && partyId === params?.partyId;
+
   if (!party) {
     throw new Error("no party");
   }
-  if(party.endDate < new Date()){
-    throw new Error("party is over");
-  }
+
   const drinks = ssg.drinks.get.prefetch({ partyId: party.id });
   const ingredients = getAvailableIngredients(prisma, party.userId);
   const categories = getCategories();
+
   const result = await Promise.all([drinks, ingredients, categories]);
+
   return {
     props: {
       trpcState: ssg.dehydrate(),
       ingredients: result[1],
       categories: result[2],
       party: JSON.parse(JSON.stringify(party)),
-      isGuest,
     },
   };
 };
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const ssg = generateSSGHelper();
-
-//   if (typeof params?.partyId !== "string") {
-//     throw new Error("no id");
-//   }
-//   const party = await getPartyById(prisma, params?.partyId);
-
-//   // const partyId = getCookie("partyId", { req, res });
-//   // const guestId = getCookie("guestId", { req, res });
-//   // const isGuest = guestId != null && partyId === params?.partyId;
-
-//   if (!party) {
-//     throw new Error("no party");
-//   }
-
-//   const drinks = ssg.drinks.get.prefetch({ partyId: party.id });
-//   const ingredients = getAvailableIngredients(prisma, party.userId);
-//   const categories = getCategories();
-
-//   const result = await Promise.all([drinks, ingredients, categories]);
-
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       ingredients: result[1],
-//       categories: result[2],
-//       party: JSON.parse(JSON.stringify(party)),
-//     },
-//   };
-// };
-
-// export const getStaticPaths = async () => {
+// export const getServerSideProps = async () => {
 //   const parties = await getAllActivePartiesId(prisma);
 //   const paths = parties.map((partyId: string) => ({
 //     params: { partyId },

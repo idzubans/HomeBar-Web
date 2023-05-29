@@ -19,8 +19,6 @@ interface Props {
 function DrinksFilter({ ingredients, categories, filterClose }: Props) {
   //const [searchString, setSearchString] = useState<string>();
   const router = useRouter();
-  const partyId = getCookie("partyId");
-  console.log(partyId);
 
   const categoryFilter: IFilterElement = useFilterElement("categories");
   const ingredientFilter: IFilterElement = useFilterElement("ingredients");
@@ -63,7 +61,12 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
 
   return (
     <motion.div
-      transition={{ duration: 0.7, type: "spring", damping: 15, stiffness: 150}}
+      transition={{
+        duration: 0.7,
+        type: "spring",
+        damping: 15,
+        stiffness: 150,
+      }}
       initial={{ opacity: 0, y: 800 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 800 }}
@@ -83,8 +86,6 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
               index={index}
             />
           ))}
-
-          {partyId && <span>asdsad</span>}
         </motion.div>
 
         <hr className="mt-8 border-t-purple-800" />
@@ -106,7 +107,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
           ))}
         </div>
       </div>
-      <div className="sticky bottom-0 flex min-w-full justify-center gap-8 rounded-2xl px-0 pt-2 pb-4 backdrop-blur-sm">
+      <div className="sticky bottom-0 flex min-w-full justify-center gap-8 rounded-2xl px-0 pb-4 pt-2 backdrop-blur-sm">
         <Button isPrimary onClick={saveFilter}>
           Apply
         </Button>

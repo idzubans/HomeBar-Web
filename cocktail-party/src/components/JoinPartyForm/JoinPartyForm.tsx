@@ -40,7 +40,7 @@ function JoinPartyForm({ partyModel, partyJoined }: Props) {
   });
 
   return (
-    <form className="flex flex-col items-center justify-center gap-4 min-h-screen bg-gradient-to-br from-indigo-100" onSubmit={formik.handleSubmit}>
+    <form className="flex flex-col items-center justify-center gap-4" onSubmit={formik.handleSubmit}>
       <Input
         label="Name"
         placeHolder="Pick your party name"

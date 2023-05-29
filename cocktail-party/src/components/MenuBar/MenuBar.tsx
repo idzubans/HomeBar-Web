@@ -13,7 +13,7 @@ function MenuBar({ onFilterClicked, filterCount }: Props) {
       <div className=" text-white rounded-full bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 p-2" onClick={onFilterClicked}>
         <FilterIcon />
         {filterCount > 0 && (
-          <p className="m-0 flex h-5 w-5 items-center justify-center rounded-full bg-white text-sm text-black">
+          <p className="m-1 flex h-7 w-7 items-center justify-center rounded-full bg-white text-base text-black absolute -top-2 right-0">
             {filterCount}
           </p>
         )}

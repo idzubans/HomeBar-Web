@@ -2,6 +2,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "~/components/shared/Button";
 import { SyncLoader } from "react-spinners";
+import { NavigationBox } from "~/components/shared/NavigationBox";
+import { Heading } from "~/components/shared/Heading";
 
 function Admin() {
   const { status } = useSession();
@@ -15,12 +17,8 @@ function Admin() {
   }
   if (status === "loading") {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 flex justify-center items-center">
-        <SyncLoader
-          color={"#4338ca"}
-          size={20}
-          aria-label="Loading Spinner"
-        />
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
+        <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
       </div>
     );
   }
@@ -31,20 +29,13 @@ function Admin() {
           <Button isPrimary onClick={() => signOut()}>
             Sign out
           </Button>
-          <Link className="w-11/12" href="admin/parties">
-            <div className="flex h-28 content-center items-center rounded-3xl bg-white bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 text-center shadow-xl">
-              <h3 className="flex w-full justify-center text-4xl font-extrabold text-white">
-                Parties
-              </h3>
-            </div>
-          </Link>
-          <Link className="w-11/12" href="admin/ingredients">
-            <div className="flex h-28 content-center items-center rounded-3xl bg-white bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 text-center shadow-xl">
-              <h3 className="flex w-full justify-center text-4xl font-extrabold text-white">
-                Ingredients
-              </h3>
-            </div>
-          </Link>
+          <NavigationBox reversed link="admin/parties">
+            <Heading isWhite>Parties</Heading>
+          </NavigationBox>
+
+          <NavigationBox reversed link="admin/ingredients">
+            <Heading isWhite>Ingredients</Heading>
+          </NavigationBox>
         </div>
       </div>
     );
