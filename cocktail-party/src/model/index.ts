@@ -45,3 +45,9 @@ export interface Party {
   endDate: Date;
   userId: string;
 }
+
+export interface Order {
+  guestName: string;
+  drinkId: string;
+  partyId: string;
+}

@@ -29,6 +29,25 @@ export const partiesRouter = createTRPCRouter({
     });
   }),
 
+  getById: protectedProcedure
+    .input(z.object({ id: string() }))
+    .query(({ ctx, input}) => {
+
+      return ctx.prisma.party.findFirst({
+        where: {
+          id: input.id
+        },
+        include: {
+          guests: true,
+          orders: {
+            include: {
+              drink: true
+            }
+          }
+        }
+      });
+    }),
+
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.party.findMany();
   }),

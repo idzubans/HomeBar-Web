@@ -73,7 +73,7 @@ function Party({ ingredients, categories, party, isGuest }: Props) {
     return <JoinPartyForm partyJoined={onPartyJoined} partyModel={party} />;
   } else if (drinks) {
     return (
-      <motion.div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
+      <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
         {filterDisplayed ? (
           <DrinksFilter
             filterClose={onFilterClosed}
@@ -81,15 +81,15 @@ function Party({ ingredients, categories, party, isGuest }: Props) {
             categories={categories}
           ></DrinksFilter>
         ) : (
-          <motion.div>
+          <div>
             <MenuBar
               filterCount={filterCount}
               onFilterClicked={() => setFilterDisplayed(true)}
             />
             <DrinkList drinks={drinks} />
-          </motion.div>
+          </div>
         )}
-      </motion.div>
+      </div>
     );
   }
 }

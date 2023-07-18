@@ -1,5 +1,4 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
 import { Button } from "~/components/shared/Button";
 import { SyncLoader } from "react-spinners";
 import { NavigationBox } from "~/components/shared/NavigationBox";

@@ -81,6 +81,8 @@ model Ingredient {
     bartenders User[]
 }
 
+
+
 model RecipePart {
     drink        Drink           @relation(fields: [drinkId], references: [id])
     drinkId      String

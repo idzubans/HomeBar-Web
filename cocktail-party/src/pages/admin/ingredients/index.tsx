@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
+import { Switch } from "~/components/ui/switch";
 
 function Ingredients() {
   const context = api.useContext();
@@ -70,26 +71,27 @@ function Ingredients() {
 
     return (
       <div className="flex flex-col p-8">
-        <h1 className="text-purple-950 text-center text-2xl font-semibold">
+        <h1 className="text-center text-2xl font-semibold text-purple-950">
           Update your ingredients inventory
         </h1>
         {ingredientsByCategory.map((cat) => (
-          <div className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg">
-            <h2 className="text-purple-950 pb-2 text-center text-xl font-semibold">
+          <div
+            key={cat.title}
+            className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg"
+          >
+            <h2 className="pb-2 text-center text-xl font-semibold text-purple-950">
               {cat.title}
             </h2>
             {cat.elements.map((ingredient) => (
               <div className="flex gap-4" key={ingredient.id}>
-                <input
-                  key={ingredient.id}
-                  type="checkbox"
+                <Switch
                   checked={
                     (ingredient.isAvailable &&
                       !changedIngredients.includes(ingredient.id)) ||
                     (!ingredient.isAvailable &&
                       changedIngredients.includes(ingredient.id))
                   }
-                  onChange={() => changedAvailability(ingredient.id)}
+                  onCheckedChange={() => changedAvailability(ingredient.id)}
                 />
                 {ingredient.name}
               </div>

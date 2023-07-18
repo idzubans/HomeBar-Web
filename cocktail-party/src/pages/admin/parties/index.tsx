@@ -2,6 +2,13 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { SyncLoader } from "react-spinners";
 import { Button } from "~/components/shared/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 import { api } from "~/utils/api";
 
 function Parties() {
@@ -25,22 +32,31 @@ function Parties() {
   if (status === "authenticated") {
     return (
       <div className="p-8">
-        <h1 className="text-purple-950 pb-2 text-center text-2xl font-semibold">
+        <h1 className="pb-2 text-center text-2xl font-semibold text-purple-950">
           Your parties
         </h1>
-        <div>
+        <div className="flex flex-col gap-4">
           {parties?.map((party) => (
             <Link key={party.id} href={`parties/${party.id}`}>
-              <div className="my-4 flex flex-col gap-2 rounded-lg border-2 border-purple-300 p-4 shadow-lg">
-                <h2 className="text-purple-950 pb-2 text-center text-xl font-semibold">
-                  {party.name}
-                </h2>
-                <p>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{party.name}</CardTitle>
+                  <CardDescription>{party.id}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {" "}
                   Active until: {party.endDate.toLocaleDateString()},{" "}
                   {party.endDate.toLocaleTimeString()}
-                </p>
-                <p>Party ID: {party.id}</p>
-              </div>
+                </CardContent>
+                {/* <CardHeader>
+                  {party.name}
+                </CardHeader>
+                <CardTitle>
+                  Active until: {party.endDate.toLocaleDateString()},{" "}
+                  {party.endDate.toLocaleTimeString()}
+                </CardTitle>
+                <CardContent>Party ID: {party.id}</CardContent> */}
+              </Card>
             </Link>
           ))}
         </div>

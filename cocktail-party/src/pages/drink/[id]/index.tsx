@@ -1,27 +1,29 @@
-import { router } from "@trpc/server";
 import { getCookie } from "cookies-next";
 import { GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import { Button } from "~/components/shared/Button";
 import { Drink } from "~/model";
 import { prisma } from "~/server/db";
 import { getDrinkById, getDrinks } from "~/server/domain/drink";
+import { api } from "~/utils/api";
 
 interface Props {
   drink: Drink;
 }
 
 function DrinkDetail({ drink }: Props) {
-  const router = useRouter();
-
-  const onDrinkOrdered = (id: string) => {
+  const { mutate } = api.orders.create.useMutation({
+    onSuccess(order) {
+      console.log(order);
+      //TODO drink ordered
+    },
+  });
+  
+  const onDrinkOrdered = () => {
     const userIdCookie = getCookie("guestId");
     const partyIdCookie = getCookie("partyId");
-
-    console.log("Ordering drink:", id);
-    console.log("Party:", partyIdCookie);
-    console.log("For the user:", userIdCookie);
-
+    if (userIdCookie && partyIdCookie) {
+      mutate({ drinkId: drink.id, guestName: userIdCookie.toString(), partyId: partyIdCookie.toString() });
+    }
   };
 
   return (
@@ -59,7 +61,7 @@ function DrinkDetail({ drink }: Props) {
             <Button
               isPrimary={true}
               onClick={() => {
-                onDrinkOrdered(drink.id);
+                onDrinkOrdered();
               }}
             >
               Order this drink

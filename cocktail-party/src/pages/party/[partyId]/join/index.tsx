@@ -59,35 +59,69 @@ function Party({ ingredients, categories, party }: Props) {
     router.replace(router.asPath);
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
-        <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-t from-indigo-100">
+  //       <SyncLoader color={"#4338ca"} size={20} aria-label="Loading Spinner" />
+  //     </div>
+  //   );
+  // }
 
-if (drinks) {
-    return (
-      <motion.div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
-        {filterDisplayed ? (
-          <DrinksFilter
-            filterClose={onFilterClosed}
-            ingredients={ingredients}
-            categories={categories}
-          ></DrinksFilter>
-        ) : (
-          <motion.div>
-            <MenuBar
-              filterCount={filterCount}
-              onFilterClicked={() => setFilterDisplayed(true)}
-            />
-            <DrinkList drinks={drinks} />
-          </motion.div>
-        )}
-      </motion.div>
-    );
-  }
+  return (
+    <div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
+      {isLoading && (
+        <div className="flex min-h-screen w-screen items-center justify-center bg-white/30 backdrop-blur-sm">
+          <SyncLoader
+            color={"#4338ca"}
+            size={20}
+            aria-label="Loading Spinner"
+          />
+        </div>
+      )}
+
+      {drinks && (
+        <>
+          {filterDisplayed ? (
+            <DrinksFilter
+              filterClose={onFilterClosed}
+              ingredients={ingredients}
+              categories={categories}
+            ></DrinksFilter>
+          ) : (
+            <motion.div>
+              <MenuBar
+                filterCount={filterCount}
+                onFilterClicked={() => setFilterDisplayed(true)}
+              />
+              <DrinkList drinks={drinks} />
+            </motion.div>
+          )}
+        </>
+      )}
+    </div>
+  );
+
+  // if (drinks) {
+  //     return (
+  //       <motion.div className="min-h-screen w-screen bg-gradient-to-t from-indigo-100 pb-8">
+  //         {filterDisplayed ? (
+  //           <DrinksFilter
+  //             filterClose={onFilterClosed}
+  //             ingredients={ingredients}
+  //             categories={categories}
+  //           ></DrinksFilter>
+  //         ) : (
+  //           <motion.div>
+  //             <MenuBar
+  //               filterCount={filterCount}
+  //               onFilterClicked={() => setFilterDisplayed(true)}
+  //             />
+  //             <DrinkList drinks={drinks} />
+  //           </motion.div>
+  //         )}
+  //       </motion.div>
+  //     );
+  //   }
 }
 
 export const getServer: GetStaticProps = async ({ params }) => {
