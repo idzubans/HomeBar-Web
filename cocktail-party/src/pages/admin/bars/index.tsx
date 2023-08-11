@@ -11,9 +11,9 @@ import {
 } from "~/components/ui/card";
 import { api } from "~/utils/api";
 
-function Parties() {
+function Bars() {
   const { status } = useSession();
-  const { data: parties, isLoading } = api.parties.getAllByBartender.useQuery();
+  const { data: bars, isLoading } = api.bars.getAllByBartender.useQuery();
 
   if (status === "unauthenticated") {
     return (
@@ -33,39 +33,26 @@ function Parties() {
     return (
       <div className="p-8">
         <h1 className="pb-2 text-center text-2xl font-semibold text-purple-950">
-          Your parties
+          Your Bars
         </h1>
         <div className="flex flex-col gap-4">
-          {parties?.map((party) => (
-            <Link key={party.id} href={`parties/${party.id}`}>
+          {bars?.map((bar) => (
+            <Link key={bar.id} href={`bars/${bar.id}`}>
               <Card>
                 <CardHeader>
-                  <CardTitle>{party.name}</CardTitle>
-                  <CardDescription>{party.id}</CardDescription>
+                  <CardTitle>{bar.name}</CardTitle>
+                  <CardDescription>{bar.id}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  {" "}
-                  Active until: {party.endDate.toLocaleDateString()},{" "}
-                  {party.endDate.toLocaleTimeString()}
-                </CardContent>
-                {/* <CardHeader>
-                  {party.name}
-                </CardHeader>
-                <CardTitle>
-                  Active until: {party.endDate.toLocaleDateString()},{" "}
-                  {party.endDate.toLocaleTimeString()}
-                </CardTitle>
-                <CardContent>Party ID: {party.id}</CardContent> */}
               </Card>
             </Link>
           ))}
         </div>
-        <Link href="parties/create">
-          <Button isPrimary>Create a party</Button>
+        <Link href="bars/create">
+          <Button isPrimary>Create a bar</Button>
         </Link>
       </div>
     );
   }
 }
 
-export default Parties;
+export default Bars;

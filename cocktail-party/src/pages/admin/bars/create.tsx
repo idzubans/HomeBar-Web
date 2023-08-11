@@ -11,12 +11,12 @@ interface FormModel {
   endDate: string;
 }
 
-function Parties() {
+function Bars() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { mutate, isSuccess } = api.parties.create.useMutation();
+  const { mutate, isSuccess } = api.bars.create.useMutation();
 
-  isSuccess && router.push("/admin/parties");
+  isSuccess && router.push("/admin/bars");
 
   const formik = useFormik({
     initialValues: {
@@ -30,8 +30,7 @@ function Parties() {
     ) => {
       const requestBody = {
         name: model.name,
-        userId: session?.user.id,
-        endDate: new Date(model.endDate),
+        userId: session?.user.id
       };
 
       mutate(requestBody);
@@ -47,12 +46,12 @@ function Parties() {
           label="Name*"
           value={formik.values.name}
           onChange={formik.handleChange}
-          placeHolder={"Name of the party"}
+          placeHolder={"Name of the bar"}
         />
       </div>
       <div className="flex gap-4">
         <Button isPrimary type="submit">
-          Submit party
+          Submit bar
         </Button>
         <Button isPrimary={false} type="reset">
           Cancel
@@ -62,4 +61,4 @@ function Parties() {
   );
 }
 
-export default Parties;
+export default Bars;

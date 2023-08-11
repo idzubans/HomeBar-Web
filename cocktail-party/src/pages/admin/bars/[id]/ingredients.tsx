@@ -3,12 +3,17 @@ import { SyncLoader } from "react-spinners";
 import { Button } from "~/components/shared/Button";
 import { api } from "~/utils/api";
 import { Switch } from "~/components/ui/switch";
+import { useRouter } from "next/router";
 
 function Ingredients() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const context = api.useContext();
-  const { data: ingredients, isLoading } = api.ingredients.getByUserId.useQuery(
-    undefined,
+  const { data: ingredients, isLoading } = api.ingredients.getByBarId.useQuery(
+    { id: id as string },
     {
+      enabled: !!id,
       refetchOnWindowFocus: false,
       onSuccess() {
         if (changedIngredients.length > 0) {
@@ -20,7 +25,7 @@ function Ingredients() {
 
   const { mutate, isLoading: isMutating } = api.ingredients.update.useMutation({
     onSuccess() {
-      context.ingredients.getByUserId.invalidate();
+      context.ingredients.getByBarId.invalidate();
     },
   });
 
@@ -50,7 +55,8 @@ function Ingredients() {
       return;
     }
 
-    mutate(changedIngredientsData);
+    console.log(changedIngredientsData);
+    mutate({barId: id as string,ingredients: changedIngredientsData});
   };
 
   if (isLoading || isMutating) {

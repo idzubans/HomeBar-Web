@@ -54,22 +54,19 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getDrinks(prisma: PrismaClient, params: SearchDrinksParams): Promise<Drink[]> {
+  console.log(params);
   const dbResponse = await prisma.drink.findMany(
     {
       where: {
         AND: [
           {
-            ...(params.partyId && {
+            ...(params.barId && {
               ingredients: {
                 every: {
                   ingredient: {
-                    bartenders: {
+                    bars: {
                       some: {
-                        parties: {
-                          some: {
-                            id: params.partyId
-                          }
-                        }
+                        id: params.barId
                       }
                     }
                   }

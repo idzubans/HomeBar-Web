@@ -28,8 +28,8 @@ function Admin() {
           <Button isPrimary onClick={() => signOut()}>
             Sign out
           </Button>
-          <NavigationBox reversed link="admin/parties">
-            <Heading isWhite>Parties</Heading>
+          <NavigationBox reversed link="admin/bars">
+            <Heading isWhite>Bars</Heading>
           </NavigationBox>
 
           <NavigationBox reversed link="admin/ingredients">

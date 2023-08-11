@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { partiesRouter } from "~/server/api/routers/parties";
+import { barsRouter } from "~/server/api/routers/bars";
 import { ingredientsRouter } from "./routers/ingredients";
 import { drinksRouter } from "./routers/drinks";
 import { ordersRouter } from "./routers/orders";
@@ -10,7 +10,7 @@ import { ordersRouter } from "./routers/orders";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  parties: partiesRouter,
+  bars: barsRouter,
   ingredients: ingredientsRouter,
   drinks: drinksRouter,
   orders: ordersRouter,

@@ -7,21 +7,27 @@ import {
 import { getIngredientsByUser, updateIngredientsStock } from "~/server/domain/ingredient";
 
 export const ingredientsRouter = createTRPCRouter({
-  getByUserId: protectedProcedure
-    .query(({ ctx }) => {
-      return getIngredientsByUser(ctx.prisma, ctx.session.user.id);
+  getByBarId: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return getIngredientsByUser(ctx.prisma, input.id);
     }),
 
   update: protectedProcedure
-    .input(z.array(
+    .input(
       z.object({
-        id: z.string(),
-        name: z.string(),
-        isAvailable: z.boolean(),
-        category: z.nullable(z.string()),
-      })
-    ))
+        barId: z.string(),
+        ingredients: z.array(
+          z.object({
+            id: z.string(),
+            name: z.string(),
+            isAvailable: z.boolean(),
+            category: z.nullable(z.string()),
+          })
+        )
+      }),
+      )
     .mutation(({ ctx, input }) => {
-      return updateIngredientsStock(ctx.prisma, ctx.session.user.id, input);
+      return updateIngredientsStock(ctx.prisma, input.barId, input.ingredients);
     }),
 });

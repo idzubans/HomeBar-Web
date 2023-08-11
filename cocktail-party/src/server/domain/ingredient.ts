@@ -1,25 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 import { Ingredient } from "~/model";
 
-export async function getIngredientsByUser(prisma: PrismaClient, bartenderId: string): Promise<Ingredient[]> {
-  const result = await prisma.ingredient.findMany({ include: { bartenders: { select: { id: true } } } });
+export async function getIngredientsByUser(prisma: PrismaClient, barId: string): Promise<Ingredient[]> {
+  console.log("getIngredientsByUser");
+  const result = await prisma.ingredient.findMany({ include: { bars: { select: { id: true } } } });
   const ingredients = result.map(ingredient => {
     return {
       id: ingredient.id,
       name: ingredient.name,
-      isAvailable: ingredient.bartenders.some(user => user.id === bartenderId),
+      isAvailable: ingredient.bars.some(bar => bar.id === barId),
       category: ingredient.category
     };
   });
   return ingredients;
 }
 
-export async function getAvailableIngredients(prisma: PrismaClient, bartenderId: string): Promise<Ingredient[]> {
+export async function getAvailableIngredients(prisma: PrismaClient, barId: string): Promise<Ingredient[]> {
   const response = await prisma.ingredient.findMany({
     where: {
-      bartenders: {
+      bars: {
         some: {
-          id: bartenderId
+          id: barId
         }
       }
     }
@@ -46,17 +47,17 @@ export async function getAllIngredients(prisma: PrismaClient): Promise<Ingredien
   })
 }
 
-export async function updateIngredientsStock(prisma: PrismaClient, userId: string, ingredients: Ingredient[]): Promise<boolean> {
+export async function updateIngredientsStock(prisma: PrismaClient, barId: string, ingredients: Ingredient[]): Promise<boolean> {
   const promises = ingredients.map(async ingredient => {
     return await prisma.ingredient.update({
       where: { id: ingredient.id },
       data: {
-        bartenders:
+        bars:
           ingredient.isAvailable
-            ? { disconnect: { id: userId } }
-            : { connect: { id: userId } }
+            ? { disconnect: { id: barId } }
+            : { connect: { id: barId } }
       },
-      include: { bartenders: { select: { id: true } } }
+      include: { bars: { select: { id: true } } }
     })
   })
   const response = await Promise.allSettled(promises);

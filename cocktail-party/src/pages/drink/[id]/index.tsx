@@ -20,9 +20,9 @@ function DrinkDetail({ drink }: Props) {
   
   const onDrinkOrdered = () => {
     const userIdCookie = getCookie("guestId");
-    const partyIdCookie = getCookie("partyId");
-    if (userIdCookie && partyIdCookie) {
-      mutate({ drinkId: drink.id, guestName: userIdCookie.toString(), partyId: partyIdCookie.toString() });
+    const barIdCookie = getCookie("barId");
+    if (userIdCookie && barIdCookie) {
+      mutate({ drinkId: drink.id, guestName: userIdCookie.toString(), barId: barIdCookie.toString() });
     }
   };
 

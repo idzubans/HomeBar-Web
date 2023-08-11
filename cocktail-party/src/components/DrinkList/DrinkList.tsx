@@ -13,7 +13,7 @@ function DrinkList({ drinks }: Props) {
         <motion.div
           className="w-11/12"
           key={drink.id}
-          transition={{ delay: 0.1 * index, duration: 0.3 }}
+          transition={{ delay: 0.02 * index, duration: 0.2 }}
           initial={{ opacity: 0, x: -200 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 200 }}

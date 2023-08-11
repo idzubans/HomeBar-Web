@@ -35,8 +35,8 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
     };
     const filter = queryString.stringify(searchParams);
     const route = filter
-      ? `${router.query.partyId}?${filter}`
-      : `${router.query.partyId}`;
+      ? `${router.query.barId}?${filter}`
+      : `${router.query.barId}`;
 
     void router.push(route, undefined, { shallow: true });
     // router.push({ pathname: router.pathname, query: {id: router.query.id, filter} }, undefined, { shallow: true });
@@ -51,7 +51,7 @@ function DrinksFilter({ ingredients, categories, filterClose }: Props) {
     void router.push(
       {
         pathname: router.pathname,
-        query: { partyId: router.query.partyId },
+        query: { barId: router.query.barId },
       },
       undefined,
       { shallow: true }

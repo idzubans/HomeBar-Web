@@ -6,7 +6,7 @@ export async function createOrder(prisma: PrismaClient, order: Order): Promise<O
     data: {
       guestName: order.guestName,
       drinkId: order.drinkId,
-      partyId: order.partyId
+      barId: order.barId
     }
   });
   return response;

@@ -1,70 +1,33 @@
 import { getCookie } from "cookies-next";
-import { AnimatePresence, motion } from "framer-motion";
 import { GetServerSideProps } from "next";
 import router from "next/router";
 import { useState } from "react";
-import FindParty from "~/components/FindParty/FindParty";
+import FindBarForm from "~/components/FindBarForm/FindBarForm";
 import JoinPartyForm from "~/components/JoinPartyForm";
 import { Heading } from "~/components/shared/Heading";
 import { NavigationBox } from "~/components/shared/NavigationBox";
-import { Party } from "~/model";
+import { Bar } from "~/model";
 import { prisma } from "~/server/db";
-import { getPartyById } from "~/server/domain/party";
+import { getBarById } from "~/server/domain/bar";
 
 interface Props {
-  party?: Party;
+  bar?: Bar;
 }
 
-export default function Landing({ party }: Props) {
-  const onPartyFound = (partyData: Party) => {
-    setParty(partyData);
-  };
-
-  const onPartyJoined = () => {
-    router.push(`/party/${partyFound?.id}`);
-  };
-
-  const [partyFound, setParty] = useState<Party | undefined>(undefined);
-
+export default function Landing({ bar }: Props) {
   return (
     <div className="m-auto flex min-h-screen flex-col items-center justify-center gap-8 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-gray-300 pt-8">
-      {party ? (
-        <NavigationBox link={`/party/${party.id}`}>
-          <Heading>{party.name}</Heading>
+      {bar ? (
+        <NavigationBox link={`/bar/${bar.id}`}>
+          <Heading>{bar.name}</Heading>
         </NavigationBox>
       ) : (
         <NavigationBox>
-          <AnimatePresence mode="wait" initial={false}>
-            {partyFound ? (
-              <motion.div
-                className="flex flex-col items-center justify-center gap-4"
-                key={partyFound.id}
-                transition={{ duration: 0.4 }}
-                initial={{ x: 200 }}
-                animate={{ x: 0 }}
-                exit={{ x: -400 }}
-              >
-                <Heading>Join a party</Heading>
-
-                <JoinPartyForm
-                  partyJoined={onPartyJoined}
-                  partyModel={partyFound}
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                className="flex flex-col items-center justify-center gap-4"
-                key="find-party"
-                transition={{ duration: 0.4 }}
-                initial={{ x: 200 }}
-                animate={{ x: 0 }}
-                exit={{ x: -400 }}
-              >
-                <Heading>Find a party</Heading>
-                <FindParty onPartyFound={onPartyFound} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div
+            className="flex flex-col items-center justify-center gap-4">
+            <Heading>Find a bar</Heading>
+            <FindBarForm />
+          </div>
         </NavigationBox>
       )}
       <NavigationBox>
@@ -78,13 +41,13 @@ export default function Landing({ party }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const partyId = getCookie("partyId", { req, res });
-  if (partyId) {
-    const party = await getPartyById(prisma, partyId.toString());
-    if (party) {
+  const barId = getCookie("barId", { req, res });
+  if (barId) {
+    const bar = await getBarById(prisma, barId.toString());
+    if (bar) {
       return {
         props: {
-          party: JSON.parse(JSON.stringify(party)),
+          bar: JSON.parse(JSON.stringify(bar)),
         },
       };
     }

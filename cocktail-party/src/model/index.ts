@@ -19,7 +19,7 @@ export interface Drink {
 }
 
 export interface SearchDrinksParams {
-  partyId?: string;
+  barId?: string;
   skip?: number;
   take?: number;
   categories?: string[];
@@ -39,15 +39,14 @@ export interface Category {
   name: string;
 }
 
-export interface Party {
+export interface Bar {
   id: string;
   name: string;
-  endDate: Date;
-  userId: string;
+  bartenderId: string;
 }
 
 export interface Order {
   guestName: string;
   drinkId: string;
-  partyId: string;
+  barId: string;
 }

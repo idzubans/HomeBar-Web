@@ -8,7 +8,7 @@ export const ordersRouter = createTRPCRouter({
       z.object({
         guestName: z.string(),
         drinkId: z.string(),
-        partyId: z.string(),
+        barId: z.string(),
       })
     )
     .mutation(({ ctx, input }) => {

@@ -9,7 +9,7 @@ import { getDrinks } from "~/server/domain/drink";
 export const drinksRouter = createTRPCRouter({
   get: publicProcedure
     .input(z.object({
-      partyId: z.string().optional(),
+      barId: z.string().optional(),
       skip: z.number().optional(),
       take: z.number().optional(),
       categories: z.array(z.string()).optional(),
