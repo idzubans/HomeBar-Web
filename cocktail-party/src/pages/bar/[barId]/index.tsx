@@ -149,7 +149,7 @@ export const getStaticPaths = async () => {
   const paths = bars.map((barId: string) => ({
     params: { barId },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 };
 
 export default Bar;
