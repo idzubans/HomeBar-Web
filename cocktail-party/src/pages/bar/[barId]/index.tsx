@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Category, Ingredient, Bar, SearchDrinksParams } from "~/model";
 import { useFilterCount } from "~/hooks/filter/useFilterCount";
 import { SyncLoader } from "react-spinners";
@@ -34,9 +34,9 @@ function Bar({ ingredients, categories, bar }: Props) {
   const filterCount = useFilterCount();
   const router = useRouter();
 
-  const { data: drinks, isLoading } = api.drinks.get.useQuery(filter);
+  const { data: drinks, isLoading } = api.drinks.get.useQuery(filter, { refetchOnMount: false, refetchOnWindowFocus: false });
 
-  useEffect(() => {
+  useMemo(() => {
     if (router.query) {
       setFilter({
         ...router.query,
@@ -84,38 +84,6 @@ function Bar({ ingredients, categories, bar }: Props) {
   }
 }
 
-// export const getServerSideProps: GetServerSideProps = async ({
-//   req,
-//   res,
-//   params,
-// }) => {
-//   const ssg = generateSSGHelper();
-//   if (typeof params?.partyId !== "string") {
-//     throw new Error("no id");
-//   }
-//   const party = await getBarById(prisma, params?.partyId);
-
-//   const partyId = getCookie("partyId", { req, res });
-//   const guestId = getCookie("guestId", { req, res });
-//   const isGuest = guestId != null && partyId === params?.partyId;
-//   if (!party) {
-//     throw new Error("no party");
-//   }
-//   const drinks = ssg.drinks.get.prefetch({ partyId: party.id });
-//   const ingredients = getAvailableIngredients(prisma, party.userId);
-//   const categories = getCategories();
-//   const result = await Promise.all([drinks, ingredients, categories]);
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       ingredients: result[1],
-//       categories: result[2],
-//       party: JSON.parse(JSON.stringify(party)),
-//       isGuest,
-//     },
-//   };
-// };
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const ssg = generateSSGHelper();
 
@@ -141,6 +109,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       categories: result[2],
       bar: JSON.parse(JSON.stringify(bar)),
     },
+    revalidate: 1,
   };
 };
 

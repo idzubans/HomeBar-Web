@@ -27,7 +27,9 @@ export const ingredientsRouter = createTRPCRouter({
         )
       }),
       )
-    .mutation(({ ctx, input }) => {
-      return updateIngredientsStock(ctx.prisma, input.barId, input.ingredients);
+    .mutation(async ({ ctx, input }) => {
+      const response = await updateIngredientsStock(ctx.prisma, input.barId, input.ingredients);
+      ctx.res.revalidate(`/bar/${input.barId}`);
+      return response;
     }),
 });

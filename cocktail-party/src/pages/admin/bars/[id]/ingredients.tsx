@@ -55,7 +55,6 @@ function Ingredients() {
       return;
     }
 
-    console.log(changedIngredientsData);
     mutate({barId: id as string,ingredients: changedIngredientsData});
   };
 

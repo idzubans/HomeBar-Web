@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import { Ingredient } from "~/model";
 
 export async function getIngredientsByUser(prisma: PrismaClient, barId: string): Promise<Ingredient[]> {
-  console.log("getIngredientsByUser");
   const result = await prisma.ingredient.findMany({ include: { bars: { select: { id: true } } } });
   const ingredients = result.map(ingredient => {
     return {
